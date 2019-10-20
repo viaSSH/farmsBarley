@@ -1,0 +1,119 @@
+{
+  "restaurant": "Farms Barley",
+  "author": ["seungsoo", "junsik"],
+  "menu": {
+    "pizza": [
+        {
+          "category": "씬 피자",
+          "price": [13500, 17000, 27000],
+          "type": [
+            {
+              "name": "슈퍼슈프림",
+              "imgUrl":"../슈퍼슈프림.png",
+              "detail": "존맛탱"
+            },
+            {
+              "name": "슈퍼슈프림2",
+              "imgUrl":"../슈퍼슈프림2.png",
+              "detail": "존맛탱2"
+            },
+            {
+              "name": "슈퍼슈프림3",
+              "imgUrl":"../슈퍼슈프림3.png",
+              "detail": "존맛탱3"
+            }
+          ]
+      },
+      {
+        "category": "골드 피자",
+        "price": [14500, 27000, 57000],
+        "type": [
+            {
+              "name": "골드슈프림",
+              "imgUrl":"../골드슈프림.png",
+              "detail": "존맛탱"
+            },
+            {
+              "name": "골드슈프림2",
+              "imgUrl":"../골드슈프림2.png",
+              "detail": "존맛탱2"
+            },
+            {
+              "name": "골드슈프림3",
+              "imgUrl":"../골드슈프림3.png",
+              "detail": "존맛탱3"
+            }
+          ]
+      }
+    ],
+    "chicken": [
+      {
+        "category": "후라이드",
+        "type": [
+          {
+            "name": "한마리치킨",
+            "imgUrl":"../한마리치킨.png",
+            "price": 15000
+          },
+          {
+            "name": "두마리치킨",
+            "imgUrl":"../두마리치킨.png",
+            "price": 15000
+          }
+        ]
+      },
+      {
+        "category": "컵치킨",
+          "type": [
+              {
+                "name": "반마리컵치킨",
+                "imgUrl":"../반마리치킨.png",
+                "price": 7000
+              },
+              {
+                "name": "미니컵치킨",
+                "imgUrl":"../미니치킨.png",
+                "price": 4000
+              }
+            ]
+         },
+       {
+         "category": "소스",
+         "type": [
+           {"name":"양념", "price":500},
+           {"name":"허니갈릭", "price":500},
+           {"name":"치즈머스타드", "price":500},
+           {"name":"허니버터맛or매운맛", "price":500}
+         ]
+       }
+    ],
+    "side": {
+      "drink":{
+        "name": [
+          {
+            "name": "콜라",
+            "imgUrl": "../cola.png"
+          },
+          {
+            "name": "제로콜라",
+            "imgUrl":"../제로콜라.png"
+          },
+          {
+              "name": "환타",
+              "imgUrl":"../환타.png"
+          },
+          {
+            "name": "펩시",
+            "imgUrl":"../펩시.png"
+          },
+          {
+              "name":"칠성",
+              "imgUrl":"../칠성.png"}
+          ],
+        "price": [1000, 3000]
+      }
+    }
+  }
+
+
+}
