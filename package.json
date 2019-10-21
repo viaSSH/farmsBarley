@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules --mode=development"
   },
   "dependencies": {
     "@webpack-cli/init": "^0.2.2",
@@ -29,6 +29,7 @@
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.0",
     "babel-preset-stage-3": "^6.24.1",
+    "copy-webpack-plugin": "^5.0.4",
     "cross-env": "^5.2.1",
     "css-loader": "^3.2.0",
     "file-loader": "^1.1.4",

@@ -1,8 +1,11 @@
 <template>
-  <md-bottom-bar class="md-accent fb-bottom-bar" md-type="shift" @md-changed="checkNewPosts">
-    <md-bottom-bar-item  to="/orderHistory" md-label="주문내역" md-icon="list"></md-bottom-bar-item>
-    <md-bottom-bar-item  to="/home" md-label="메뉴" md-icon="home"></md-bottom-bar-item>
-    <md-bottom-bar-item  to="/orderCart" md-label="장바구니" md-icon="shopping_cart"></md-bottom-bar-item>
+  <!-- <md-bottom-bar class="md-accent fb-bottom-bar" md-type="shift" @md-changed="checkNewPosts"> -->
+  <md-bottom-bar class="md-accent fb-bottom-bar" md-type="shift" :md-active-item="activeTab">
+  <!-- <md-bottom-bar class="md-accent fb-bottom-bar" md-type="shift"> -->
+
+    <md-bottom-bar-item id="tab_history"   to="/orderHistory" md-label="주문내역" md-icon="list" @click.native="tabChange('history')"></md-bottom-bar-item>
+    <md-bottom-bar-item id="tab_home"   to="/home" md-label="" md-icon="home" @click.native="tabChange('home')"></md-bottom-bar-item>
+    <md-bottom-bar-item id="tab_cart"   to="/orderCart" md-label="장바구니" md-icon="shopping_cart" @click.native="tabChange('cart')"></md-bottom-bar-item>
   </md-bottom-bar>
   <!-- <md-bottom-bar class="fb-bottom-bar" md-sync-route >
     <md-bottom-bar-item to="/cc" md-label="주문내역" md-icon="list"></md-bottom-bar-item>
@@ -14,10 +17,17 @@
   export default {
     name: 'BarRouter',
     data: () => ({
+      activeTab: "tab_home",
+      // activeTab: 1,
       newPosts: 0,
       checkInterval: null
     }),
     methods: {
+     tabChange(id) {
+       this.activeTab = "tab_" + id;
+       // this.activeTab = id;
+       console.log(this.activeTab);
+     },
      clearCheckPosts () {
        window.clearInterval(this.checkInterval)
        this.checkInterval = null
@@ -41,7 +51,7 @@
      }
    },
    mounted () {
-     this.checkNewPosts()
+     // this.checkNewPosts()
    }
   }
 </script>

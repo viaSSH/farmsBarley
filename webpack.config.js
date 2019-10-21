@@ -1,14 +1,24 @@
 var path = require('path')
 var webpack = require('webpack')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
+  // mode: 'development',
   entry: './src/main.js',
+  // pages: {
+  //   index: {
+  //     entry: 'src/main.js',
+  //     filename: 'index.html'
+  //   }
+  //
+  // },
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
     filename: 'build.js'
   },
+
   module: {
     rules: [
       {
@@ -76,10 +86,14 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     noInfo: true,
-    overlay: true
+    overlay: true,
+    host: 'localhost'
   },
   plugins: [
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
+    // new CopyWebpackPlugin([
+    //   { from: './index.html', to: './' }
+    // ])
   ],
   performance: {
     hints: false
