@@ -3,6 +3,7 @@ import App from './App.vue';
 import VueRouter from 'vue-router';
 
 import axios from 'axios'
+import moment from 'vue-moment'
 
 import VueMaterial from 'vue-material';
 
@@ -26,7 +27,7 @@ Vue.use(VueRouter); // router 기능 확장 선언
 
 Vue.use(BootstrapVue)
 Vue.use(VueMaterial)
-
+Vue.use(moment)
 const User = {
   template: `
     <div class="user">

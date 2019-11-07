@@ -7,40 +7,136 @@
           "price": [13500, 17000, 27000],
           "type": [
             {
-              "name": "슈퍼슈프림",
+              "name": "김치불고기",
               "imgUrl":"../슈퍼슈프림.png",
-              "detail": "존맛탱"
+              "detail": "존맛탱",
+              "id": "ps1"
             },
             {
-              "name": "슈퍼슈프림2",
+              "name": "슈프림",
               "imgUrl":"../슈퍼슈프림2.png",
-              "detail": "존맛탱2"
+              "detail": "존맛탱2",
+              "id": "ps2"
             },
             {
-              "name": "슈퍼슈프림3",
+              "name": "베이컨포테이토",
               "imgUrl":"../슈퍼슈프림3.png",
-              "detail": "존맛탱3"
+              "detail": "존맛탱3",
+              "id": "ps3"
             }
           ]
       },
       {
-        "category": "골드 피자",
-        "price": [14500, 27000, 57000],
+        "category": "팜발 피자1",
+        "price": [15500, 19000, 31000],
         "type": [
             {
-              "name": "골드슈프림",
+              "name": "불고기",
               "imgUrl":"../골드슈프림.png",
-              "detail": "존맛탱"
+              "detail": "존맛탱",
+              "id": "ppa1"
             },
             {
-              "name": "골드슈프림2",
+              "name": "베이컨포테이토",
               "imgUrl":"../골드슈프림2.png",
-              "detail": "존맛탱2"
+              "detail": "존맛탱2",
+              "id": "ppa2"
             },
             {
-              "name": "골드슈프림3",
+              "name": "칠리새우",
               "imgUrl":"../골드슈프림3.png",
-              "detail": "존맛탱3"
+              "detail": "존맛탱3",
+              "id": "ppa3"
+            },
+            {
+              "name": "핫치킨",
+              "imgUrl":"../골드슈프림3.png",
+              "detail": "존맛탱3",
+              "id": "ppa4"
+            }
+          ]
+      },
+      {
+        "category": "팜발 피자2",
+        "price": [17000],
+        "type": [
+            {
+              "name": "버팔로윙 루꼴라",
+              "imgUrl":"../골드슈프림.png",
+              "detail": "존맛탱",
+              "id": "ppb1"
+            }
+          ]
+      },
+      {
+        "category": "팜발 피자3",
+        "price": [15500,19000,31000],
+        "type": [
+            {
+              "name": "갈릭비프",
+              "imgUrl":"../골드슈프림.png",
+              "detail": "존맛탱",
+              "id": "ppc1"
+            },
+            {
+              "name": "칠리새우",
+              "imgUrl":"../골드슈프림.png",
+              "detail": "존맛탱",
+              "id": "ppc2"
+            }
+          ]
+      },
+      {
+        "category": "시카고피자",
+        "price": [21000,27000],
+        "type": [
+            {
+              "name": "불고기",
+              "imgUrl":"../골드슈프림.png",
+              "detail": "존맛탱",
+              "id": "pc1"
+            },
+            {
+              "name": "페파로니",
+              "imgUrl":"../골드슈프림.png",
+              "detail": "존맛탱",
+              "id": "pc2"
+            }
+          ]
+      },
+      {
+        "category": "조각피자",
+        "price": [4000],
+        "type": [
+            {
+              "name": "페파로니",
+              "imgUrl":"../골드슈프림.png",
+              "detail": "존맛탱",
+              "id": "pj1"
+            },
+            {
+              "name": "페파로니",
+              "imgUrl":"../골드슈프림.png",
+              "detail": "존맛탱",
+              "id": "pj2"
+            }
+          ]
+      },
+      {
+        "category": "빅파이피자",
+        "price": [8500],
+        "type": [
+            {
+              "name": "김치불고기",
+              "imgUrl":"../골드슈프림.png",
+              "detail": "존맛탱",
+              "id": "pb1"
+            },
+            {
+              "name": "김치베이컨",
+              "imgUrl":"../골드슈프림.png",
+              "detail": "존맛탱",
+              "id": "pb2"
             }
           ]
       }
@@ -52,12 +148,14 @@
           {
             "name": "한마리치킨",
             "imgUrl":"../한마리치킨.png",
-            "price": 15000
+            "price": 12500,
+            "id": "c1"
           },
           {
             "name": "두마리치킨",
             "imgUrl":"../두마리치킨.png",
-            "price": 15000
+            "price": 18500,
+            "id": "c2"
           }
         ]
       },
@@ -67,22 +165,24 @@
               {
                 "name": "반마리컵치킨",
                 "imgUrl":"../반마리치킨.png",
-                "price": 7000
+                "price": 7000,
+                "id": "c3"
               },
               {
                 "name": "미니컵치킨",
                 "imgUrl":"../미니치킨.png",
-                "price": 4000
+                "price": 4000,
+                "id": "c4"
               }
             ]
          },
        {
          "category": "소스",
          "type": [
-           {"name":"양념", "price":500},
-           {"name":"허니갈릭", "price":500},
-           {"name":"치즈머스타드", "price":500},
-           {"name":"허니버터맛or매운맛", "price":500}
+           {"name":"양념", "price":500, "id":"s1"},
+           {"name":"허니갈릭", "price":500, "id":"s2"},
+           {"name":"치즈머스타드", "price":500, "id":"s3"},
+           {"name":"허니버터맛or매운맛", "price":500, "id":"s4"}
          ]
        }
     ],

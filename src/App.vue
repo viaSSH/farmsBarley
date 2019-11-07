@@ -71,9 +71,11 @@ a {
   border-width: 2px !important;
 }
 
-/* .md-table-cell-container {
+
+
+.md-table-cell-container {
     padding: 0px !important;
-  } */
+  }
   /* .md-table-head-label {
     padding-left: 0px !important;
   } */

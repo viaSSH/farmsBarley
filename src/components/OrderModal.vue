@@ -2,19 +2,40 @@
   <div>
     <md-dialog :md-active.sync="showDialog" class="fb-order-modal" :md-click-outside-to-close=false @md-clicked-outside="toggle()">
     <!-- <md-dialog> -->
-      <md-dialog-title>!!TEST!!</md-dialog-title>
+      <md-dialog-title>{{modalType}}</md-dialog-title>
 
       <md-dialog-content>
         <!-- <p>zzz</p> -->
 
           <div class="md-layout">
-            <div class="md-layout-item md-size-100">
-              <b-form-group id="input-group-1" label="일반/반반" label-for="input-1">
-                <b-form-select variant="primary" class="fb-select-box" v-model="pizzaMenuSelectd" :options="pizzaOptions"></b-form-select>
+
+            <!-- for pizza -->
+            <div v-if="modalType=='pizza'" class="md-layout-item md-size-100">
+              <b-form-group id="input-group-1" label="일반" label-for="input-1">
+                <b-form-select variant="primary" class="fb-select-box" v-model="selectedId" :options="pizzaOptions" disabled></b-form-select>
               </b-form-group>
             </div>
 
-            <div class="md-layout-item md-size-50">
+            <div v-if="modalType=='pizza'" class="md-layout-item md-size-100">
+              <b-form-group id="input-group-2" label="반반 선택" label-for="input-2">
+                <b-form-select variant="primary" class="fb-select-box" v-model="pizzaHalfSelected" :options="pizzaHalfOptions"></b-form-select>
+              </b-form-group>
+            </div>
+
+            <!-- for chicken -->
+            <div v-if="modalType=='chicken'" class="md-layout-item md-size-50" style="padding-right:12px">
+              <b-form-group id="input-group-1" label="한마리/두마리" label-for="input-1">
+                <b-form-select variant="primary" class="fb-select-box" v-model=selectedId :options="chickenOptions" disabled></b-form-select>
+              </b-form-group>
+            </div>
+
+            <div v-if="modalType=='chicken'"  class="md-layout-item md-size-50">
+              <b-form-group id="input-group-3" label="소스 선택" label-for="input-3">
+                <b-form-select class="fb-select-box" v-model="chickenSauceSelected" :options="chickenSauceOptions"></b-form-select>
+              </b-form-group>
+            </div>
+
+            <div v-if="modalType=='pizza'"  class="md-layout-item md-size-50">
               <b-form-group label="사이즈">
                 <b-form-radio-group
                   id="btn-radios-2"
@@ -28,7 +49,7 @@
               </b-form-group>
             </div>
 
-            <div class="md-layout-item md-size-50">
+            <div v-if="modalType=='pizza'"  class="md-layout-item md-size-50">
               <b-form-group id="input-group-3" label="크러스트" label-for="input-3">
                 <b-form-select class="fb-select-box" v-model="pizzaCrustSelectd" :options="pizzaCrustOptions"></b-form-select>
               </b-form-group>
@@ -38,16 +59,23 @@
               <b-form-group label="수량">
                 <b-button-group>
                   <b-button v-on:click="quantityChange(-1)"  variant="outline-primary" size="lg" >-</b-button>
-                  <b-button variant="primary" size="lg" block>{{pizzaQauntity}}</b-button>
+                  <b-button variant="primary" size="lg" block>{{menuquantity}}</b-button>
                   <b-button v-on:click="quantityChange(1)" variant="outline-primary" size="lg" >+</b-button>
                 </b-button-group>
               </b-form-group>
 
             </div>
 
-            <div class="md-layout-item md-size-50">
+            <div v-if="modalType=='pizza'"  class="md-layout-item md-size-50">
               <b-form-group id="input-group-5" label="커팅" label-for="input-5">
                 <b-form-select class="fb-select-box" v-model="pizzaCuttingSelectd" :options="pizzaCuttingOptions"></b-form-select>
+              </b-form-group>
+            </div>
+
+            <!-- for chicken -->
+            <div v-if="modalType=='chicken'"  class="md-layout-item md-size-50">
+              <b-form-group id="input-group-5" label="소스 추가 +1000원" label-for="input-5">
+                <b-form-select class="fb-select-box" v-model="chickenAddSauceSelectd" :options="chickenAddSauceOptions"></b-form-select>
               </b-form-group>
             </div>
 
@@ -60,8 +88,9 @@
       </md-dialog-content>
 
       <md-dialog-actions class="md-layout fb-modal-action-btn">
-        <md-button class="md-raised md-primary md-layout-item md-size-40"  @click="toggle()" >바로주문</md-button>
-        <md-button class="md-raised md-primary md-layout-item md-size-40"  @click="toggle()">장바구니 담기</md-button>
+        <!-- <md-button class="md-raised md-primary md-layout-item md-size-40"  @click="toggle()" >바로주문</md-button> -->
+        <md-button class="md-raised md-primary md-layout-item md-size-40"  @click="getcookie()" >바로주문</md-button>
+        <md-button class="md-raised md-primary md-layout-item md-size-40"  @click=" addToCart();">장바구니 담기</md-button>
         <!-- <md-button class="md-primary" :value="showDialog" @click="toggleDialog = false">Save</md-button> -->
       </md-dialog-actions>
     </md-dialog>
@@ -74,12 +103,25 @@
 <script>
 import menuData from '../assets/menu.json'
 
+import VueCookies from 'vue-cookies'
+
+
+
+// Vue.use(require('vue-cookies'))
+//
+VueCookies.config('7d')
+
   export default {
     name: 'order-modal',
     props: {
       showDialog: {
         type: Boolean,
         default: false
+      },
+      modalType: String,
+      selectedId: {
+        type: String,
+        default: ''
       }
     },
     data: () => ({
@@ -97,51 +139,212 @@ import menuData from '../assets/menu.json'
       ],
       pizzaMenuSelectd: 'p1',
       pizzaOptions: [
-        { text: '일반 -슈퍼슈프림', value: 'p1' },
-        { text: '일반 - ㅋ', value: 'p2' },
-        { text: '일반 - ㄴ', value: 'p3' }
+        // {text: '반반 메뉴선택', value: 'half'}
       ],
-      pizzaCrustSelectd: 'c1',
+      pizzaHalfSelected: 'default',
+      pizzaHalfOptions: [
+        {text: '선택없음', value: 'default'}
+      ],
+
+      pizzaCrustSelectd: 'no',
       pizzaCrustOptions: [
-        { text: '없음', value: 'c1' },
-        { text: '있음', value: 'c2' }
+        { text: '없음', value: 'no' },
+        { text: '있음', value: 'yes' }
       ],
       pizzaQuantitySelected: '1',
       pizzaQuantityOptions: [
         { text: '-', value: '1' },
-        { text: '1', value: 'large', disabled: true},
-        { text: '+', value: 'big' }
+        { text: '1', value: '0', disabled: true},
+        { text: '+', value: '2' }
       ],
       pizzaCuttingSelectd: 'normal',
       pizzaCuttingOptions: [
         { text: '일반', value: 'normal' },
         { text: '벌집모양', value: 'square' },
       ],
-      pizzaQauntity: 0
+
+      // chicken data
+      // chickenMenuSelectd: 'c1',
+      // chickenMenuSelectd: this.selectedId,
+      chickenOptions: [
+      ],
+      chickenSauceSelected: 's0',
+      chickenSauceOptions: [
+        { text: '없음', value: 's0' },
+      ],
+      chickenAddSauceSelectd: 's0',
+      chickenAddSauceOptions: [
+        { text: '없음', value: 's0' },
+      ],
+      menuquantity: 1,
+      orderData: []
 
     }),
-    created: function() {
-      this.MENU = menuData.menu;
-      console.log(menuData.menu);
+    watch: {
+      selectedId: function(newV, oldV) {
+        this.pizzaHalfOptions = new Array();
+        this.pizzaHalfOptions.push({text: '선택없음', value: 'default'});
+        if(newV.slice(0,1) == 'p') {
+          if(newV.slice(1,2) == 's') {
+              for(var i=0 ; i<menuData.menu.pizza[0].type.length ; i++) {
+                this.pizzaHalfOptions.push({text: "반반 - " + menuData.menu.pizza[0].type[i].name,  value: menuData.menu.pizza[0].type[i].id});
+              }
+          }
+          if(newV.slice(1,3) == 'pa') {
+              for(var i=0 ; i<menuData.menu.pizza[1].type.length ; i++) {
+                this.pizzaHalfOptions.push({text: "반반 - " + menuData.menu.pizza[1].type[i].name,  value: menuData.menu.pizza[1].type[i].id});
+              }
+          }
+          if(newV.slice(1,2) == 'pc') {
+              for(var i=0 ; i<menuData.menu.pizza[3].type.length ; i++) {
+                this.pizzaHalfOptions.push({text: "반반 - " + menuData.menu.pizza[3].type[i].name,  value: menuData.menu.pizza[3].type[i].id});
+              }
+          }
+          if(newV.slice(1,2) == 'c') {
+              for(var i=0 ; i<menuData.menu.pizza[4].type.length ; i++) {
+                this.pizzaHalfOptions.push({text: "반반 - " + menuData.menu.pizza[4].type[i].name,  value: menuData.menu.pizza[4].type[i].id});
+              }
+          }
+          if(newV.slice(1,2) == 'b') {
+              for(var i=0 ; i<menuData.menu.pizza[6].type.length ; i++) {
+                this.pizzaHalfOptions.push({text: "반반 - " + menuData.menu.pizza[6].type[i].name,  value: menuData.menu.pizza[6].type[i].id});
+              }
+          }
+        }
 
+      }
+    },
+    created: function() {
+      // this.MENU = menuData.menu;
+      // console.log(menuData.menu);
+
+
+
+    },
+    mounted() {
+      this.setPizzaDataFromJson()
     },
     methods: {
       toggle: function() {
         this.$emit('closeModalE', false);
+
         // this.$emit('hide-modal')
         // this.showDialog = !this.showDialog;
       },
       quantityChange: function(e) {
         if(e == -1){
-          this.pizzaQauntity -= 1;
+          this.menuquantity -= 1;
         }
         else if(e == 1){
-          this.pizzaQauntity += 1;
+          this.menuquantity += 1;
         }
-        if(this.pizzaQauntity < 1)
-          this.pizzaQauntity = 1;
+        if(this.menuquantity < 1)
+          this.menuquantity = 1;
 
         console.log(e);
+      },
+      addToCart: function() {
+        console.log("cart");
+        this.orderData = new Array();
+
+        switch (this.modalType) {
+          case 'pizza':
+            this.orderData.push(
+              {"id": this.selectedId,
+              "option": this.pizzaHalfSelected,
+              "size": this.pizzaSizeSelected,
+              "crust": this.pizzaCrustSelectd,
+              "cutting": this.pizzaCuttingSelectd,
+              "quantity": this.menuquantity}
+            );
+            break;
+          case 'chicken':
+            // this.orderData.push({"text": } );
+
+            this.orderData.push({"id": this.selectedId, "option": this.chickenSauceSelected, "quantity": this.menuquantity});
+
+            if(this.chickenAddSauceSelectd != "s0") {
+              this.orderData.push({"id": this.chickenAddSauceSelectd});
+            }
+
+
+            // console.log(this.selectedId);
+            // console.log(this.chickenSauceSelected);
+            // console.log(this.menuquantity);
+            // console.log(this.chickenAddSauceSelectd);
+            break;
+          default:
+            break;
+
+        }
+
+        // console.log(this.orderData);
+        var prevData = this.getcookie();
+        console.log(prevData);
+        if(prevData == null){
+          console.log("prev null");
+          prevData = new Object();
+          VueCookies.set('menu', JSON.stringify(this.orderData));
+        }
+        else{
+
+            prevData = prevData.concat(this.orderData);
+            console.log(prevData, this.orderData);
+            VueCookies.set('menu', JSON.stringify(prevData));
+        }
+
+        console.log(prevData);
+
+        // VueCookies.set('menu', JSON.stringify(prevData));
+
+
+
+
+
+      },
+      getcookie: function() {
+        // console.log(JSON.parse(VueCookies.get('menu')));
+        return JSON.parse(VueCookies.get('menu'));
+      },
+      setPizzaDataFromJson: function() {
+        // foreach(this.MENU.pizza)
+        // this.pizzaOptions.push({text:'test', value: 'zz'});
+        // console.log(menuData.menu.chicken[2].type);
+
+        // pizzaOptions
+        for(var cnt=0 ; cnt<7 ; cnt++) {
+          for(var i=0 ; i<menuData.menu.pizza[cnt].type.length ; i++) {
+
+            this.pizzaOptions.push({text: menuData.menu.pizza[cnt].category + "-" + menuData.menu.pizza[cnt].type[i].name,  value: menuData.menu.pizza[cnt].type[i].id});
+            // console.log(menuData.menu.pizza[cnt].type[i].name);
+
+
+          }
+        }
+
+
+
+
+        for(var i=0 ; i<menuData.menu.chicken[0].type.length ; i++) {
+            this.chickenOptions.push({text: menuData.menu.chicken[0].type[i].name,  value: menuData.menu.chicken[0].type[i].id});
+        }
+
+        for(var i=0 ; i<menuData.menu.chicken[1].type.length ; i++) {
+            this.chickenOptions.push({text: menuData.menu.chicken[1].type[i].name,  value: menuData.menu.chicken[1].type[i].id});
+        }
+
+
+        for(var i=0 ; i<menuData.menu.chicken[2].type.length ; i++) {
+            this.chickenAddSauceOptions.push({text: menuData.menu.chicken[2].type[i].name,  value: menuData.menu.chicken[2].type[i].id});
+            this.chickenSauceOptions.push({text: menuData.menu.chicken[2].type[i].name,  value: menuData.menu.chicken[2].type[i].id});
+        }
+
+
+
+        // this.menuData.menu.chicken[2].type.forEach(function (item, index) {
+        //   this.chickenAddSauceOptions.push({text: item.name,  value: item.id});
+        //   console.log({text: item.name, value: item.id});
+        // });
       }
     }
   }

@@ -1,0 +1,69 @@
+{
+    "thin": {
+      "medium": {
+          "topping": 2.5,
+          "oven": 7,
+          "cutting": 1,
+          "total": 10.5
+      },
+      "large": {
+          "topping": 3,
+          "oven": 7,
+          "cutting": 1,
+          "total": 11
+      },
+      "big": {
+          "topping": 4,
+          "oven": 7,
+          "cutting": 1.5,
+          "total": 12.5
+      }
+    },
+    "half": {
+      "medium": {
+          "topping": 5,
+          "oven": 7,
+          "cutting": 1,
+          "total": 13
+      },
+      "large": {
+          "topping": 5,
+          "oven": 7,
+          "cutting": 1,
+          "total": 13
+      },
+      "big": {
+          "topping": 5,
+          "oven": 7,
+          "cutting": 1.5,
+          "total": 13.5
+      }
+    },
+    "chicago": {
+      "medium": {
+          "topping": 10,
+          "oven": 15,
+          "cutting": 1,
+          "total": 26
+      },
+      "large": {
+          "topping": 10,
+          "oven": 15,
+          "cutting": 1,
+          "total": 26
+      }
+    },
+    "bigpi": {
+      "medium": {
+          "topping": 1,
+          "oven": 7,
+          "cutting": 1,
+          "total": 9
+      }
+    },
+    "chicken": {
+      "medium": {
+          "total": 0.3
+      }
+    },
+}

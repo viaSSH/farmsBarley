@@ -1,6 +1,6 @@
 <template>
   <div>
-    <order-modal :showDialog="showDialog" @closeModalE="closeModal"></order-modal>
+    <order-modal :showDialog="showDialog" :modalType="modalType" :selectedId="selectedId" @closeModalE="closeModal"></order-modal>
 
     <md-tabs class="md-primary" md-alignment="fixed" md-sync-route md-active-tab="tab-pizza">
       <md-tab class="fb-menu-tab" id="tab-pizza" md-label="피자" to="/menuTab/pizza" exact>
@@ -18,7 +18,7 @@
               </div>
 
               <div  class="md-layout fb-menu-container">
-                <md-list-item v-for="type in menu.type" :key="type.name" class="md-layout-item md-size-50 fb-menu-card">
+                <md-list-item v-for="type in menu.type" :key="type.id" class="md-layout-item md-size-50 fb-menu-card">
                   <md-card class="">
                     <md-card-media>
                       <img src="../assets/logo.png" alt="People">
@@ -29,7 +29,7 @@
                     </md-card-content>
 
                     <md-card-actions class="md-layout" md-alignment="space-between">
-                      <md-button class="md-layout-item md-size-100 md-accent md-raised" @click="showOrder">주문하기</md-button>
+                      <md-button class="md-layout-item md-size-100 md-accent md-raised" @click="showOrder('pizza', type.id)">주문하기</md-button>
                     </md-card-actions>
                   </md-card>
                 </md-list-item>
@@ -56,7 +56,7 @@
               </div> -->
 
               <div  class="md-layout fb-menu-container">
-                <md-list-item v-for="type in menu.type" :key="type.name" class="md-layout-item md-size-50 fb-menu-card">
+                <md-list-item v-for="type in menu.type" :key="type.id" class="md-layout-item md-size-50 fb-menu-card">
                   <md-card class="">
                     <md-card-media>
                       <img src="../assets/logo.png" alt="People">
@@ -67,7 +67,7 @@
                     </md-card-content>
 
                     <md-card-actions class="md-layout" md-alignment="space-between">
-                      <md-button class="md-layout-item md-size-100 md-accent md-raised">주문하기</md-button>
+                      <md-button class="md-layout-item md-size-100 md-accent md-raised" @click="showOrder('chicken', type.id)">주문하기</md-button>
                     </md-card-actions>
                   </md-card>
                 </md-list-item>
@@ -110,18 +110,33 @@ export default {
       expandSingle: false,
       MENU: [],
       showDialog: false,
-      test: 10
+      test: 10,
+      modalType: null,
+      selectedId: null
       // modalData: orderModal
     }
   },
   created: function() {
     this.MENU = menuData.menu;
-    console.log(this.pizzaCategory);
+    // console.log(this.pizzaCategory);
 
   },
   methods: {
-    showOrder: function(e) {
+    showOrder: function(menu, id) {
+      switch (menu){
+        case 'pizza':
+          this.modalType = "pizza";
+          break;
+        case 'chicken':
+          this.modalType = "chicken";
+          break;
+        default:
+          console.log("menu select err");
+      };
+      console.log("menu select: " + id);
+      this.selectedId = id;
       this.showDialog = true;
+
       this.test = 5;
       // modalData.showDialog = true;
       // console.log(e);
