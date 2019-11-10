@@ -69,6 +69,7 @@
 
 <script>
 import menuData from '../assets/menu.json'
+import timeData from '../assets/time.json'
 import axios from 'axios'
 import VueCookies from 'vue-cookies'
 import moment from 'vue-moment'
@@ -271,22 +272,90 @@ export default {
         params.order[i].price = 0;
         params.order[i].state = 0;
         params.order[i].full = this.orderList[i].name;
+
+        // if(jsonData[i].id)
+
+        if(jsonData[i].id.slice(0, 1) == 'p') {
+          if(jsonData[i].option != 'default') {
+            switch (jsonData[i].size) {
+              case 'medium':
+                  params.order[i].makingTime = timeData.half.medium.total;
+                  break;
+              case 'large':
+                  params.order[i].makingTime = timeData.half.large.total;
+                  break;
+              case 'big':
+                  params.order[i].makingTime = timeData.half.big.total;
+                  break;
+              default:
+                    console.log("size err");
+            }
+          }
+          else if(jsonData[i].id.slice(1, 2) == 's') {
+            switch (jsonData[i].size) {
+              case 'medium':
+                  params.order[i].makingTime = timeData.thin.medium.total;
+                  break;
+              case 'large':
+                  params.order[i].makingTime = timeData.thin.large.total;
+                  break;
+              case 'big':
+                  params.order[i].makingTime = timeData.thin.big.total;
+                  break;
+              default:
+                    console.log("size err2");
+            }
+          }
+          else if(jsonData[i].id.slice(1, 2) == 'c') {
+            switch (jsonData[i].size) {
+              case 'medium':
+                  params.order[i].makingTime = timeData.chicago.medium.total;
+                  break;
+              case 'large':
+                  params.order[i].makingTime = timeData.chicago.large.total;
+                  break;
+              default:
+                    console.log("size err2");
+            }
+          }
+          else if(jsonData[i].id.slice(1, 2) == 'b') {
+            switch (jsonData[i].size) {
+              case 'medium':
+                  params.order[i].makingTime = timeData.bigpi.medium.total;
+                  break;
+              default:
+                    console.log("size err3");
+            }
+          }
+        }
+        else if(jsonData[i].id.slice(0, 1) == 'c') {
+          params.order[i].makingTime = timeData.chicken.medium.total;
+        }
+        else {
+          console.log("slice 0 1 err");
+        }
+
       }
       // params.menuId =
 
       console.log(params);
+      // console.log(timeData);
+
 
       axios
       .put('https://ow696its6d.execute-api.ap-northeast-2.amazonaws.com/v1',
           params
       )
-      .then(response => (
-        // this.info = response
-        console.log(response)
-      ))
+      .then((resp) => {
+        // VueCookies.remove("menu");
+        this.orderList = [];
+
+        var preData = JSON.parse(VueCookies.get('ordered'));
+        var orderCode = resp.data;
+        console.log(resp);
+      })
     },
     test: function() {
-      console.log("d");
       axios
       .get('https://tqxh9shurc.execute-api.ap-northeast-2.amazonaws.com/v1/mytest')
       .then(response => (

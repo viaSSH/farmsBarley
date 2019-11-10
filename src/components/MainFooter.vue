@@ -60,6 +60,7 @@
   .fb-bottom-bar{
     position: fixed;
     bottom:0px;
+    z-index: 999;
     /* background-color: #374e3c !important; */
 
 
