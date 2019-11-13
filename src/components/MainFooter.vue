@@ -26,7 +26,7 @@
      tabChange(id) {
        this.activeTab = "tab_" + id;
        // this.activeTab = id;
-       console.log(this.activeTab);
+       // console.log(this.activeTab);
      },
      clearCheckPosts () {
        window.clearInterval(this.checkInterval)

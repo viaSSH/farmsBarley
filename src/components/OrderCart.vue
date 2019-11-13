@@ -6,7 +6,7 @@
 
       <div class="md-layout md-alignment-center-center fb-cart-menubar">
         <div class="md-layout-item md-size-40">
-          <md-checkbox v-model="isCheckedAll" value="1">전체선택</md-checkbox>
+          <!-- <md-checkbox v-model="isCheckedAll" value="1">전체선택</md-checkbox> -->
         </div>
         <div class="md-layout-item md-size-20">
 
@@ -62,6 +62,8 @@
         </div>
       </div>
 
+      <!-- <md-progress-spinner v-if="spinnerOn" :md-diameter="100" :md-stroke="10" md-mode="indeterminate"></md-progress-spinner> -->
+
 
   </div>
 
@@ -73,6 +75,9 @@ import timeData from '../assets/time.json'
 import axios from 'axios'
 import VueCookies from 'vue-cookies'
 import moment from 'vue-moment'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.css';
+
 VueCookies.config('7d')
 
 export default {
@@ -92,6 +97,9 @@ export default {
       //   amount: '1'
       // }
     ],
+    spinnerOn: true,
+    isLoading: false,
+    fullPage: true
     // curTime: new Date().format("yyyy")
 
 
@@ -230,6 +238,30 @@ export default {
             }
           }
         }
+        else if(menuId.slice(0,1) == 's') {
+          if(menuId.slice(1,2) == 's') {
+            console.log("소스추가");
+            for(var i=0 ; i<menuData.menu.chicken[2].type.length ; i++) {
+              if(menuData.menu.chicken[2].type[i].id == menuId) {
+                // console.log(menuData.menu.chicken[2].type[i].id);
+                orderName = orderName + menuData.menu.chicken[2].type[i].name + "/";
+                orderPrice = menuData.menu.chicken[2].type[i].price;
+              }
+            }
+          }
+          else{
+            for(var i=0 ; i<3 ; i++) {
+              for(var j=0 ; j<menuData.menu.side[i].type.length ; j++) {
+                if(menuData.menu.side[i].type[j].id == menuId) {
+                  // console.log(menuData.menu.chicken[2].type[i].id);
+                  orderName = orderName + menuData.menu.side[i].type[j].name + "/";
+                  orderPrice = menuData.menu.side[i].type[j].price;
+                }
+              }
+            }
+
+          }
+        }
         console.log(orderData);
         orderData = {"name": orderName, "price": orderPrice+"원/"+jsonData[num].quantity+"개", "id": num+1};
 
@@ -251,11 +283,11 @@ export default {
       var stdId = 21300816;
 
 
-      var orderTime = Date.now();
-      var orderCode = String(stdId) + String(orderTime%100000);
+      // var orderTime = Date.now();
+      var orderCode;
 
       params.stdId = stdId;
-      params.orderCode = orderCode;
+
       params.order = new Array();
 
       var jsonData = JSON.parse(VueCookies.get('menu'));
@@ -273,6 +305,11 @@ export default {
         params.order[i].state = 0;
         params.order[i].full = this.orderList[i].name;
 
+
+        // orderCode = String(stdId) + String(Date.now()%100000+(i+1));
+        orderCode = String(stdId) + String(Date.now() + (i+1)).slice(8,13);
+        params.order[i].orderCode = orderCode;
+        console.log("time", orderCode);
         // if(jsonData[i].id)
 
         if(jsonData[i].id.slice(0, 1) == 'p') {
@@ -331,16 +368,34 @@ export default {
         else if(jsonData[i].id.slice(0, 1) == 'c') {
           params.order[i].makingTime = timeData.chicken.medium.total;
         }
+        else if(jsonData[i].id.slice(0, 2) == 'sp') {
+          params.order[i].makingTime = timeData.pasta.medium.total;
+        }
+        else if(jsonData[i].id.slice(0, 2) == 'sc') {
+          params.order[i].makingTime = timeData.wing.medium.total;
+        }
         else {
           console.log("slice 0 1 err");
         }
+
+
+        if(jsonData[i].id.slice(0, 2) == 'sd' || jsonData[i].id.slice(0, 2) == 'ss') {
+          params.order[i].makedFood = 1;
+        }
+        // for no showing in master page
 
       }
       // params.menuId =
 
       console.log(params);
       // console.log(timeData);
-
+      let loader = this.$loading.show({
+                // Optional parameters
+                // container: this.fullPage ? null : this.$refs.formContainer,
+                container: null,
+                canCancel: false,
+                // onCancel: this.onCancel,
+              });
 
       axios
       .put('https://ow696its6d.execute-api.ap-northeast-2.amazonaws.com/v1',
@@ -353,6 +408,9 @@ export default {
         var preData = JSON.parse(VueCookies.get('ordered'));
         var orderCode = resp.data;
         console.log(resp);
+
+        loader.hide();
+
       })
     },
     test: function() {

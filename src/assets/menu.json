@@ -179,39 +179,70 @@
        {
          "category": "소스",
          "type": [
-           {"name":"양념", "price":500, "id":"s1"},
-           {"name":"허니갈릭", "price":500, "id":"s2"},
-           {"name":"치즈머스타드", "price":500, "id":"s3"},
-           {"name":"허니버터맛or매운맛", "price":500, "id":"s4"}
+           {"name":"양념 소스", "price":500, "id":"ss1"},
+           {"name":"허니갈릭 소스", "price":500, "id":"ss2"},
+           {"name":"치즈머스타드 소스", "price":500, "id":"ss3"},
+           {"name":"허니버터맛or매운맛 소스", "price":500, "id":"ss4"}
          ]
        }
     ],
-    "side": {
-      "drink":{
-        "name": [
+    "side": [
+      {
+      "category": "음료",
+      "type": [
           {
-            "name": "콜라",
-            "imgUrl": "../cola.png"
+            "name": "콜라 중",
+            "imgUrl": "../cola.png",
+            "id": "sd1",
+            "price": 1000
           },
           {
-            "name": "제로콜라",
-            "imgUrl":"../제로콜라.png"
+            "name": "콜라 대",
+            "imgUrl":"../제로콜라.png",
+            "id": "sd2",
+            "price": 2000
           },
           {
-              "name": "환타",
-              "imgUrl":"../환타.png"
+              "name": "스프라이트 중",
+              "imgUrl":"../환타.png",
+              "id": "sd3",
+              "price": 1000
           },
           {
-            "name": "펩시",
-            "imgUrl":"../펩시.png"
-          },
+            "name": "스프라이트 대",
+            "imgUrl":"../펩시.png",
+            "id": "sd4",
+            "price": 2000
+          }
+        ],
+      "price": [1000,2000]
+      },
+      {
+      "category": "파스타",
+      "type": [
           {
-              "name":"칠성",
-              "imgUrl":"../칠성.png"}
-          ],
-        "price": [1000, 3000]
-      }
+            "name": "치즈파스타",
+            "imgUrl": "../cola.png",
+            "id": "sp1",
+            "price": 5500
+          }
+        ],
+      "price": [5500]
+    },
+    {
+    "category": "버팔로윙",
+    "type": [
+        {
+          "name": "버팔로윙",
+          "imgUrl": "../cola.png",
+          "id": "sc1",
+          "price": 900
+        }
+      ],
+    "price": [900]
     }
+
+    ]
   }
 
 

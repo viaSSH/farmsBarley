@@ -12,7 +12,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'vue-material/dist/vue-material.min.css';
 import BootstrapVue from 'bootstrap-vue'
 
-
+import Loading from 'vue-loading-overlay'
 
 // import { MainPage } from './test/MainPage.vue'
 import MainPage from './components/MainPage.vue';
@@ -28,6 +28,7 @@ Vue.use(VueRouter); // router 기능 확장 선언
 Vue.use(BootstrapVue)
 Vue.use(VueMaterial)
 Vue.use(moment)
+Vue.use(Loading);
 const User = {
   template: `
     <div class="user">
@@ -41,6 +42,9 @@ const User = {
 const MenuTab = { template: '<div></div>' }
 
 const routes = [
+  {
+    path: '/index.html', redirect: '/home' 
+  },
   {
     path: '/',
     component: MainPage
@@ -68,6 +72,7 @@ const routes = [
         { path: 'pizza', component: MenuTab },
         { path: 'chicken', component: MenuTab },
         { path: 'side', component: MenuTab },
+
 
         // ...또 다른 서브 라우트
       ]

@@ -2,7 +2,7 @@
   <div>
     <order-modal :showDialog="showDialog" :modalType="modalType" :selectedId="selectedId" @closeModalE="closeModal"></order-modal>
 
-    <md-tabs class="md-primary" md-alignment="fixed" md-sync-route md-active-tab="tab-pizza">
+    <md-tabs class="md-primary fb-menu-tabs" md-alignment="fixed" md-sync-route md-active-tab="tab-pizza">
       <md-tab class="fb-menu-tab" id="tab-pizza" md-label="피자" to="/menuTab/pizza" exact>
 
         <md-list class="fb-menu-box" v-for="menu in MENU.pizza" :key="menu.category"  md-expand-single="false" >
@@ -80,9 +80,40 @@
         </md-list>
       </md-tab>
 
-      <md-tab id="tab-side" md-label="사이드/음료" to="/menuTab/side">
-        Favorites tab
-        <p>Maiores, dolorum. Beatae, optio tempore fuga odit aperiam velit, consequuntur magni inventore sapiente alias sequi odio qui harum dolorem sunt quasi corporis.</p>
+      <md-tab class="fb-menu-tab" id="tab-side" md-label="사이드/음료" to="/menuTab/side">
+        <md-list class="fb-menu-box" v-for="menu in MENU.side" :key="menu.category"  md-expand-single="false" >
+          <md-list-item class="fb-menu-list-item"  md-expand >
+            <!-- <md-icon>whatshot</md-icon> -->
+            <span class="md-list-item-text fb-menu-list">{{menu.category}}</span>
+
+            <md-list slot="md-expand">
+              <div class="md-layout fb-menu-price">
+                <span class="md-layout-item md-size-33">M {{menu.price[0]}}</span>
+                <span class="md-layout-item md-size-33">L {{menu.price[1]}}</span>
+                <span class="md-layout-item md-size-33">B {{menu.price[2]}}</span>
+              </div>
+
+              <div  class="md-layout fb-menu-container">
+                <md-list-item v-for="type in menu.type" :key="type.id" class="md-layout-item md-size-50 fb-menu-card">
+                  <md-card class="">
+                    <md-card-media>
+                      <img src="../assets/logo.png" alt="People">
+                    </md-card-media>
+
+                    <md-card-content class="fb-menu-title">
+                      {{type.name}}
+                    </md-card-content>
+
+                    <md-card-actions class="md-layout" md-alignment="space-between">
+                      <md-button class="md-layout-item md-size-100 md-accent md-raised" @click="showOrder('side', type.id)">주문하기</md-button>
+                    </md-card-actions>
+                  </md-card>
+                </md-list-item>
+              </div>
+
+            </md-list>
+          </md-list-item>
+        </md-list>
       </md-tab>
     </md-tabs>
     <!-- <router-view></router-view> -->
@@ -130,6 +161,9 @@ export default {
         case 'chicken':
           this.modalType = "chicken";
           break;
+        case 'side':
+          this.modalType = "side";
+          break;
         default:
           console.log("menu select err");
       };
@@ -164,6 +198,10 @@ export default {
 
   .fb-menu-tab {
     padding: 4px 0px;
+  }
+
+  .fb-menu-tabs {
+    margin-bottom: 80px;
   }
 
   .fb-menu-title {

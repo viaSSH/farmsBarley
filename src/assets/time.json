@@ -65,5 +65,15 @@
       "medium": {
           "total": 0.3
       }
+    },
+    "pasta": {
+      "medium": {
+        "total": 5
+      }
+    },
+    "wing": {
+      "medium": {
+        "total": 6
+      }
     }
 }

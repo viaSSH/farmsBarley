@@ -35,6 +35,13 @@
               </b-form-group>
             </div>
 
+            <!-- for side -->
+            <div v-if="modalType=='side'" class="md-layout-item md-size-50" style="padding-right:12px">
+              <b-form-group id="input-group-10" label="메뉴선택" label-for="input-1">
+                <b-form-select variant="primary" class="fb-select-box" v-model=selectedId :options="sideOptions" disabled></b-form-select>
+              </b-form-group>
+            </div>
+
             <div v-if="modalType=='pizza'"  class="md-layout-item md-size-50">
               <b-form-group label="사이즈">
                 <b-form-radio-group
@@ -176,6 +183,8 @@ VueCookies.config('7d')
       chickenAddSauceOptions: [
         { text: '없음', value: 's0' },
       ],
+
+      sideOptions: [],
       menuquantity: 1,
       orderData: []
 
@@ -264,8 +273,14 @@ VueCookies.config('7d')
             this.orderData.push({"id": this.selectedId, "option": this.chickenSauceSelected, "quantity": this.menuquantity});
 
             if(this.chickenAddSauceSelectd != "s0") {
-              this.orderData.push({"id": this.chickenAddSauceSelectd});
+              this.orderData.push({"id": this.chickenAddSauceSelectd, "quantity": 1});
             }
+            break;
+          case 'side':
+            this.orderData.push(
+              {"id": this.selectedId,
+              "quantity": this.menuquantity}
+            );
 
 
             // console.log(this.selectedId);
@@ -275,6 +290,8 @@ VueCookies.config('7d')
             break;
           default:
             break;
+
+          // this.toggle();
 
         }
 
@@ -299,7 +316,7 @@ VueCookies.config('7d')
 
 
 
-
+        this.$emit('closeModalE', false);
 
       },
       getcookie: function() {
@@ -337,6 +354,17 @@ VueCookies.config('7d')
         for(var i=0 ; i<menuData.menu.chicken[2].type.length ; i++) {
             this.chickenAddSauceOptions.push({text: menuData.menu.chicken[2].type[i].name,  value: menuData.menu.chicken[2].type[i].id});
             this.chickenSauceOptions.push({text: menuData.menu.chicken[2].type[i].name,  value: menuData.menu.chicken[2].type[i].id});
+        }
+
+        // pizzaOptions
+        for(var cnt=0 ; cnt<3 ; cnt++) {
+          for(var i=0 ; i<menuData.menu.side[cnt].type.length ; i++) {
+
+            this.sideOptions.push({text: menuData.menu.side[cnt].type[i].name,  value: menuData.menu.side[cnt].type[i].id});
+            // console.log(menuData.menu.side[cnt].type[i].name);
+
+
+          }
         }
 
 
