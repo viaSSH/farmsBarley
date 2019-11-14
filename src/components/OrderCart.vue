@@ -4,7 +4,7 @@
         <span>장바구니</span>
       </div>
 
-      <div class="md-layout md-alignment-center-center fb-cart-menubar">
+      <div class="md-layout md-alignment-center-center fb-cart-menubar" v-if="orderList.length != 0">
         <div class="md-layout-item md-size-40">
           <!-- <md-checkbox v-model="isCheckedAll" value="1">전체선택</md-checkbox> -->
         </div>
@@ -19,7 +19,7 @@
         </div>
       </div>
 
-      <div class="md-layout md-alignment-center-center fb-cart-list-container">
+      <div class="md-layout md-alignment-center-center fb-cart-list-container" v-if="orderList.length != 0">
         <div class="md-layout-item md-size-100 fb-cart-list-box">
           <md-card>
             <md-card-header>
@@ -59,6 +59,17 @@
               <md-button class="md-raised md-accent fb-cart-list-action" @click="buy()">결제하기</md-button>
             </md-card-actions>
           </md-card>
+        </div>
+      </div>
+
+      <div class="md-layout md-alignment-center-center" style="text-align:center;" v-if="orderList.length == 0">
+        <div class="md-layout-item md-size-100" style="margin: 20px 0px;">
+          <md-icon class="md-size-5x" style="color: #eecb77; ">shopping_cart</md-icon>
+        </div>
+        <div class="md-layout-item md-size-100">
+          <p>장바구니에 담긴 상품이 없습니다</p>
+          <p>주문하시겠습니까?</p>
+          <md-button class="md-raised md-accent fb-cart-list-action" to="/menu" >주문하기</md-button>
         </div>
       </div>
 
@@ -328,16 +339,19 @@ export default {
                     console.log("size err");
             }
           }
-          else if(jsonData[i].id.slice(1, 2) == 's') {
+          else if(jsonData[i].id.slice(1, 2) == 's' || jsonData[i].id.slice(1, 2) == 'p') {
             switch (jsonData[i].size) {
               case 'medium':
-                  params.order[i].makingTime = timeData.thin.medium.total;
+                  // params.order[i].makingTime = timeData.thin.medium.total;
+                  params.order[i].makingTime = timeData.thin.medium;
                   break;
               case 'large':
-                  params.order[i].makingTime = timeData.thin.large.total;
+                  // params.order[i].makingTime = timeData.thin.large.total;
+                  params.order[i].makingTime = timeData.thin.large;
                   break;
               case 'big':
-                  params.order[i].makingTime = timeData.thin.big.total;
+                  // params.order[i].makingTime = timeData.thin.big.total;
+                  params.order[i].makingTime = timeData.thin.big;
                   break;
               default:
                     console.log("size err2");
@@ -402,7 +416,7 @@ export default {
           params
       )
       .then((resp) => {
-        // VueCookies.remove("menu");
+        VueCookies.remove("menu");
         this.orderList = [];
 
         var preData = JSON.parse(VueCookies.get('ordered'));

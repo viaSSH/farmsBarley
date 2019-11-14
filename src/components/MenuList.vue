@@ -21,7 +21,7 @@
                 <md-list-item v-for="type in menu.type" :key="type.id" class="md-layout-item md-size-50 fb-menu-card">
                   <md-card class="">
                     <md-card-media>
-                      <img src="../assets/logo.png" alt="People">
+                      <img src="../assets/pizza1.png" alt="People">
                     </md-card-media>
 
                     <md-card-content class="fb-menu-title">
@@ -59,7 +59,7 @@
                 <md-list-item v-for="type in menu.type" :key="type.id" class="md-layout-item md-size-50 fb-menu-card">
                   <md-card class="">
                     <md-card-media>
-                      <img src="../assets/logo.png" alt="People">
+                      <img src="../assets/chicken1.jpg" alt="People">
                     </md-card-media>
 
                     <md-card-content class="fb-menu-title">
@@ -97,7 +97,7 @@
                 <md-list-item v-for="type in menu.type" :key="type.id" class="md-layout-item md-size-50 fb-menu-card">
                   <md-card class="">
                     <md-card-media>
-                      <img src="../assets/logo.png" alt="People">
+                      <img src="../assets/cola.jpg" alt="People">
                     </md-card-media>
 
                     <md-card-content class="fb-menu-title">
