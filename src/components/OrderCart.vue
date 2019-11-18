@@ -110,7 +110,8 @@ export default {
     ],
     spinnerOn: true,
     isLoading: false,
-    fullPage: true
+    fullPage: true,
+    PRICE: []
     // curTime: new Date().format("yyyy")
 
 
@@ -277,6 +278,7 @@ export default {
         orderData = {"name": orderName, "price": orderPrice+"원/"+jsonData[num].quantity+"개", "id": num+1};
 
         if(Object.keys(orderData).length !== 0) {
+            this.PRICE.push(orderPrice);
             this.orderList.push(orderData);
         }
       }
@@ -287,7 +289,7 @@ export default {
 
 
 
-      // console.log("hihi");
+      console.log("price", this.PRICE);
     },
     buy: function() {
       var params = new Object();
@@ -302,7 +304,9 @@ export default {
       params.order = new Array();
 
       var jsonData = JSON.parse(VueCookies.get('menu'));
+      console.log("buy", jsonData);
       var cnt = jsonData.length;
+
       for(var i=0 ; i<cnt ; i++) {
         params.order[i] = new Object()  ;
         params.order[i].menuId = jsonData[i].id;
@@ -311,11 +315,12 @@ export default {
         params.order[i].option = jsonData[i].option;
         params.order[i].quantity = jsonData[i].quantity;
         params.order[i].size = jsonData[i].size;
-
-        params.order[i].price = 0;
         params.order[i].state = 0;
         params.order[i].full = this.orderList[i].name;
 
+        if(params.order[i].price == null) params.order[i].price = 0;
+        params.order[i].price += this.PRICE[i];
+        // console.log("pp", i,  this.PRICE[i], params.order[i].price);
 
         // orderCode = String(stdId) + String(Date.now()%100000+(i+1));
         orderCode = String(stdId) + String(Date.now() + (i+1)).slice(8,13);
@@ -327,13 +332,13 @@ export default {
           if(jsonData[i].option != 'default') {
             switch (jsonData[i].size) {
               case 'medium':
-                  params.order[i].makingTime = timeData.half.medium.total;
+                  params.order[i].makingTime = timeData.half.medium;
                   break;
               case 'large':
-                  params.order[i].makingTime = timeData.half.large.total;
+                  params.order[i].makingTime = timeData.half.large;
                   break;
               case 'big':
-                  params.order[i].makingTime = timeData.half.big.total;
+                  params.order[i].makingTime = timeData.half.big;
                   break;
               default:
                     console.log("size err");
@@ -360,10 +365,10 @@ export default {
           else if(jsonData[i].id.slice(1, 2) == 'c') {
             switch (jsonData[i].size) {
               case 'medium':
-                  params.order[i].makingTime = timeData.chicago.medium.total;
+                  params.order[i].makingTime = timeData.chicago.medium;
                   break;
               case 'large':
-                  params.order[i].makingTime = timeData.chicago.large.total;
+                  params.order[i].makingTime = timeData.chicago.large;
                   break;
               default:
                     console.log("size err2");
@@ -372,7 +377,7 @@ export default {
           else if(jsonData[i].id.slice(1, 2) == 'b') {
             switch (jsonData[i].size) {
               case 'medium':
-                  params.order[i].makingTime = timeData.bigpi.medium.total;
+                  params.order[i].makingTime = timeData.bigpi.medium;
                   break;
               default:
                     console.log("size err3");
@@ -380,13 +385,13 @@ export default {
           }
         }
         else if(jsonData[i].id.slice(0, 1) == 'c') {
-          params.order[i].makingTime = timeData.chicken.medium.total;
+          params.order[i].makingTime = timeData.chicken.medium;
         }
         else if(jsonData[i].id.slice(0, 2) == 'sp') {
-          params.order[i].makingTime = timeData.pasta.medium.total;
+          params.order[i].makingTime = timeData.pasta.medium;
         }
         else if(jsonData[i].id.slice(0, 2) == 'sc') {
-          params.order[i].makingTime = timeData.wing.medium.total;
+          params.order[i].makingTime = timeData.wing.medium;
         }
         else {
           console.log("slice 0 1 err");

@@ -1,5 +1,8 @@
 <template >
   <div class="md-layout md-alignment-center-center fb-menuHistory-container">
+    <div class="" v-if="MENU == null">
+      <span>주문내역이 없습니다</span>
+    </div>
     <div class="md-layout-item md-size-90 fb-menuHistory-box"  v-for="menu in MENU" >
       <md-card>
         <md-card-header>

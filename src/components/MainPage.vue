@@ -3,7 +3,7 @@
     <div class="md-layout-item md-size-70 main-order-box">
         <span>현재까지 완료된 주문번호</span>
         <span style="font-size:20px; padding:0px;">14</span>
-        <span>1 팀 대기중</span>
+        <span>{{leftOrder}} 팀 대기중</span>
     </div>
 
     <span class="md-layout-item md-size-100">받으실 주문번호</span>
@@ -16,7 +16,7 @@
 
     <div class="md-layout-item md-size-100" style="color: #374c3c">
       <span class="md-layout-item md-size-100">지금 주문하시면 </span>
-      <p class="md-layout-item md-size-100">약 30분이 걸립니다. </p>
+      <p class="md-layout-item md-size-100">약 {{calPredctionTime(predictionTime+defaultMakeTime)}}분이 걸립니다. </p>
 
       <p class="md-layout-item md-size-100">주문하시겠습니까?</p>
     </div>
@@ -30,9 +30,44 @@
 </template>
 
 <script>
+import axios from 'axios'
+import moment from 'vue-moment'
+
 export default {
-  name: 'main-page'
+  name: 'main-page',
+  data() {
+    return {
+      predictionTime: 0,
+      defaultMakeTime: 10,
+      leftOrder: 0,
+    }
+  },
+  methods: {
+    getTime: function() {
+      axios
+      .get('https://ow696its6d.execute-api.ap-northeast-2.amazonaws.com/v1/time')
+      .then((res) =>  {
+        console.log(res);
+        this.predictionTime = res.data.prevLeftTimeMax + res.data.toppingAllTime;
+        this.leftOrder = res.data.leftOrder;
+        // prevLeftTimeMax
+        // toppingAllTime
+      })
+    },
+    calPredctionTime: function(t) {
+      var approximationTime = Math.round(t);
+      // return a;
+      return approximationTime;
+    }
+  },
+  created: function() {
+    this.getTime();
+  }
 }
+
+
+
+//
 </script>
 
 <style lang="scss" >

@@ -269,11 +269,16 @@ VueCookies.config('7d')
             break;
           case 'chicken':
             // this.orderData.push({"text": } );
-
-            this.orderData.push({"id": this.selectedId, "option": this.chickenSauceSelected, "quantity": this.menuquantity});
+            this.orderData.push(
+              {"id": this.selectedId,
+              "option": this.chickenSauceSelected,
+              "quantity": this.menuquantity
+            });
 
             if(this.chickenAddSauceSelectd != "s0") {
-              this.orderData.push({"id": this.chickenAddSauceSelectd, "quantity": 1});
+              this.orderData.push(
+                {"id": this.chickenAddSauceSelectd,
+                "quantity": 1});
             }
             break;
           case 'side':
