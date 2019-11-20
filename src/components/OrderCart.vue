@@ -53,10 +53,11 @@
               </md-table>
             </md-card-content>
 
-            <md-card-actions>
+            <md-card-actions style="justify-content: space-evenly">
               <!-- <md-button>Action</md-button> -->
-              <span> <md-icon>access_time</md-icon> 약 30분 소요 예정</span>
-              <md-button class="md-raised md-accent fb-cart-list-action" @click="buy()">결제하기</md-button>
+              <!-- <span> <md-icon>access_time</md-icon> 약 30분 소요 예정</span> -->
+              <md-button class="md-raised md-accent fb-cart-list-action" @click="buy()">현금결제</md-button>
+              <md-button class="md-raised md-accent fb-cart-list-action" @click="buy()">카드결제</md-button>
             </md-card-actions>
           </md-card>
         </div>
@@ -293,7 +294,12 @@ export default {
     },
     buy: function() {
       var params = new Object();
-      var stdId = 21300816;
+      // var stdId = 21300816;
+      var stdId = VueCookies.get('id');
+
+      if(stdId == null || stdId == "") {
+        stdId = "0";
+      }
 
 
       // var orderTime = Date.now();

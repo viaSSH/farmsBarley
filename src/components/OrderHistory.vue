@@ -1,9 +1,14 @@
 <template >
   <div class="md-layout md-alignment-center-center fb-menuHistory-container">
-    <div class="" v-if="MENU == null">
-      <span>주문내역이 없습니다</span>
+    <!-- <div class="" v-if="MENU == null"> -->
+    <div class="" v-if="MENU.length == 0">
+      <span>주문내역이 없습니다 </span>
     </div>
-    <div class="md-layout-item md-size-90 fb-menuHistory-box"  v-for="menu in MENU" >
+    <div class="">
+        <span> - {{stdId}} test</span>
+    </div>
+
+    <div class="md-layout-item md-size-90 fb-menuHistory-box"  v-for="(menu, index) in MENU" >
       <md-card>
         <md-card-header>
           <!-- <div class="md-subtitle">2019/10/21 02:30:12</div> -->
@@ -15,14 +20,16 @@
         <span class="md-layout-item md-size-25">{{menu.price}}원</span>
 
         <div class="md-layout" v-if="menu.makedFood==0">
-          <span>약 30분 소요 예정</span>
-          <span class="md-layout-item md-size-25" :class="{'item-bold': isAfter(menu.state, menu.startTime, menu.makingTime)==1}" >주문접수</span>
-          <span class="md-layout-item md-size-25">토핑 중</span>
-          <span class="md-layout-item md-size-25">굽는 중</span>
-          <span class="md-layout-item md-size-25">포장완료</span>
+          <!-- <span>약 30분 소요 예정</span> -->
+          <!-- <span class="md-layout-item md-size-25" :class="{'item-bold': isAfter(menu.state, menu.startTime, menu.makingTime)==1}" >주문접수</span> -->
+          <span class="md-layout-item md-size-25" :class="{'item-bold': menu.state==0}" >주문접수</span>
+          <span class="md-layout-item md-size-25" :class="{'item-bold': menu.state==1 && isAfter(menu.leftTime, menu.makingTime) == 1}" >토핑 중</span>
+          <span class="md-layout-item md-size-25" :class="{'item-bold': menu.state==1 && isAfter(menu.leftTime, menu.makingTime) == 2}" >굽는 중</span>
+          <span class="md-layout-item md-size-25" :class="{'item-bold': menu.state==1 && isAfter(menu.leftTime, menu.makingTime) == 3}" >포장완료</span>
 
-          <span style="text-align:center; font-size:16px; font-weight:800;">예정 완성 시간 {{calEndTime(menu.makeStartTime, menu.makingTime)}}</span>
-          <span style="text-align:center;" >약 30분 후에 맛있는 피자가 완성됩니다.</span>
+          <!-- <span style="text-align:center; font-size:16px; font-weight:800;">예정 완성 시간 {{calEndTime(menu.makeStartTime, menu.makingTime)}}</span> -->
+          <span style="text-align:center; font-size:16px; font-weight:800;">예정 완성 시간 {{(Date.now()+(leftTime[index])*60*1000) | moment("HH시 mm분")}}</span>
+          <span style="text-align:center;" >약 {{menu.leftTime}}분 후에 맛있는 피자가 완성됩니다.</span>
           <span style="text-align:center;" >미리 매장에 와서 대기해주세요</span>
         </div>
 
@@ -39,44 +46,89 @@
 <script>
 import axios from 'axios'
 import moment from 'vue-moment'
+import VueCookies from 'vue-cookies'
+VueCookies.config('7d')
 
 export default {
   name: 'order-history',
   data() {
     return {
-        stdId: 21300816,
-        MENU: null,
+        stdId: 0,
+        MENU: [],
         menuList: [],
         // orderTime: []
         orderTime: 123,
-        test: true
+        test: true,
+        leftTime:[]
     }
   },
+  watch: {
+
+  },
   methods: {
-    isAfter: function(state, startTime, makingTime) {
-      if(state == 1) {
+    isAfter: function(t, making) {
+      var now = Date.now();
+
+      console.log(making);
+      if(t < making.oven) {
+        return 2;
+      }
+      else if(t < making.oven + making.topping) {
         return 1;
       }
+
+
+
+      // if((now - startTime)/1000/60 > makingTime.topping)
       // return true;
     },
-    calEndTime: function(start, making) {
-      console.log(start, making);
-      return "123";
+    calEndTime: function(t) {
+      // console.log(start, making);
+      var left = Date.now() + t*60*1000;
+      // return "123";
+      console.log(Date.now(), left, t);
+      return left;
     },
-    getOrdered: function() {
+    getOrdered: function(id) {
       axios
-      .get('https://ow696its6d.execute-api.ap-northeast-2.amazonaws.com/v1?id='+this.stdId)
+      .get('https://ow696its6d.execute-api.ap-northeast-2.amazonaws.com/v1?id='+id)
       .then((response) =>  {
         console.log(response);
         this.num = response.data.Count;
-        this.orderTime = response.data.Items[0].startTime;
+        if(this.num > 0) {
+            this.orderTime = response.data.Items[0].startTime;
+        }
+        // this.orderTime = response.data.Items[0].startTime;
         this.MENU = response.data.Items;
+        for(var i=0 ; i< this.num ; i++) {
+            this.calLeftTime(i, response.data.Items[i].orderCode);
+        }
+
       })
     },
+    calLeftTime: function(id, code) {
+      axios
+      .get('https://ow696its6d.execute-api.ap-northeast-2.amazonaws.com/v1/time?orderCode='+code)
+      .then((response) =>  {
+        console.log(id, code, response.data.leftTime);
+        this.MENU[id].leftTime = response.data.leftTime;
+
+        this.leftTime.push(response.data.leftTime);
+
+      })
+    }
 
   },
   created: function() {
-    this.getOrdered();
+
+
+    var temp = VueCookies.get('id');
+    if(temp == null || temp == "") {
+      temp = 0;
+    }
+    this.stdId = temp;
+
+    this.getOrdered(this.stdId);
   }
 
 

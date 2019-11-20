@@ -2,7 +2,7 @@
   <div class="page-container">
       <md-app>
         <md-app-toolbar class="md-primary fb_header">
-          <md-button class="md-icon-button" >
+          <md-button class="md-icon-button" @click="back()">
             <md-icon>arrow_back</md-icon>
           </md-button>
           <p class="md-title">
@@ -19,7 +19,13 @@
 
 <script>
 export default {
-  name: 'main-header'
+  name: 'main-header',
+  methods: {
+    back: function() {
+      console.log("back");
+      history.back();
+    }
+  }
 }
 </script>
 

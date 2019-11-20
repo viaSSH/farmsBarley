@@ -57,7 +57,7 @@
             </div>
 
             <div v-if="modalType=='pizza'"  class="md-layout-item md-size-50">
-              <b-form-group id="input-group-3" label="크러스트" label-for="input-3">
+              <b-form-group id="input-group-3" label="크러스트+1000원" label-for="input-3">
                 <b-form-select class="fb-select-box" v-model="pizzaCrustSelectd" :options="pizzaCrustOptions"></b-form-select>
               </b-form-group>
             </div>
@@ -96,7 +96,7 @@
 
       <md-dialog-actions class="md-layout fb-modal-action-btn">
         <!-- <md-button class="md-raised md-primary md-layout-item md-size-40"  @click="toggle()" >바로주문</md-button> -->
-        <md-button class="md-raised md-primary md-layout-item md-size-40"  @click="getcookie()" >바로주문</md-button>
+        <md-button class="md-raised md-primary md-layout-item md-size-40"  @click="addToCartAndBuy()" >바로주문</md-button>
         <md-button class="md-raised md-primary md-layout-item md-size-40"  @click=" addToCart();">장바구니 담기</md-button>
         <!-- <md-button class="md-primary" :value="showDialog" @click="toggleDialog = false">Save</md-button> -->
       </md-dialog-actions>
@@ -111,7 +111,7 @@
 import menuData from '../assets/menu.json'
 
 import VueCookies from 'vue-cookies'
-
+import VueRouter from 'vue-router';
 
 
 // Vue.use(require('vue-cookies'))
@@ -142,7 +142,7 @@ VueCookies.config('7d')
       pizzaSizeOptions: [
         { text: 'M', value: 'medium' },
         { text: 'L', value: 'large' },
-        { text: 'B', value: 'big' }
+        { text: 'B', value: 'big' , disabled:true}
       ],
       pizzaMenuSelectd: 'p1',
       pizzaOptions: [
@@ -192,27 +192,38 @@ VueCookies.config('7d')
     watch: {
       selectedId: function(newV, oldV) {
         this.pizzaHalfOptions = new Array();
+        this.pizzaSizeOptions = new Array();
+
+        this.pizzaSizeOptions.push({text: 'M', value: 'medium'});
         this.pizzaHalfOptions.push({text: '선택없음', value: 'default'});
         if(newV.slice(0,1) == 'p') {
           if(newV.slice(1,2) == 's') {
               for(var i=0 ; i<menuData.menu.pizza[0].type.length ; i++) {
                 this.pizzaHalfOptions.push({text: "반반 - " + menuData.menu.pizza[0].type[i].name,  value: menuData.menu.pizza[0].type[i].id});
               }
+              this.pizzaSizeOptions.push({text: 'L', value: 'large'});
+              this.pizzaSizeOptions.push({text: 'B', value: 'big'});
           }
           if(newV.slice(1,3) == 'pa') {
               for(var i=0 ; i<menuData.menu.pizza[1].type.length ; i++) {
                 this.pizzaHalfOptions.push({text: "반반 - " + menuData.menu.pizza[1].type[i].name,  value: menuData.menu.pizza[1].type[i].id});
               }
+              this.pizzaSizeOptions.push({text: 'L', value: 'large'});
+              this.pizzaSizeOptions.push({text: 'B', value: 'big'});
           }
-          if(newV.slice(1,2) == 'pc') {
+          if(newV.slice(1,3) == 'pc') {
               for(var i=0 ; i<menuData.menu.pizza[3].type.length ; i++) {
                 this.pizzaHalfOptions.push({text: "반반 - " + menuData.menu.pizza[3].type[i].name,  value: menuData.menu.pizza[3].type[i].id});
               }
+              this.pizzaSizeOptions.push({text: 'L', value: 'large'});
+              this.pizzaSizeOptions.push({text: 'B', value: 'big'});
+
           }
           if(newV.slice(1,2) == 'c') {
               for(var i=0 ; i<menuData.menu.pizza[4].type.length ; i++) {
                 this.pizzaHalfOptions.push({text: "반반 - " + menuData.menu.pizza[4].type[i].name,  value: menuData.menu.pizza[4].type[i].id});
               }
+              this.pizzaSizeOptions.push({text: 'L', value: 'large'});
           }
           if(newV.slice(1,2) == 'b') {
               for(var i=0 ; i<menuData.menu.pizza[6].type.length ; i++) {
@@ -220,6 +231,12 @@ VueCookies.config('7d')
               }
           }
         }
+
+        // [
+        //   { text: 'M', value: 'medium' },
+        //   { text: 'L', value: 'large' disabled:true},
+        //   { text: 'B', value: 'big' , disabled:true}
+        // ];
 
       }
     },
@@ -322,6 +339,11 @@ VueCookies.config('7d')
 
 
         this.$emit('closeModalE', false);
+
+      },
+      addToCartAndBuy: function() {
+        this.addToCart();
+        this.$router.push('/orderCart');
 
       },
       getcookie: function() {
