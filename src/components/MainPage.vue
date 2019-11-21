@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="md-layout  md-alignment-center-center main-order-view">
-    <div class="md-layout-item md-size-70 main-order-box">
+    <div v-if="false" class="md-layout-item md-size-70 main-order-box">
         <!-- <span>현재까지 완료된 주문번호</span>
         <span style="font-size:20px; padding:0px;">14</span> -->
         <span>{{leftOrder}} 팀 대기중</span>

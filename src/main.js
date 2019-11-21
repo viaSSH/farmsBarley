@@ -19,6 +19,7 @@ import MainPage from './components/MainPage.vue';
 import OrderHistoryPage from './components/OrderHistory.vue'
 import OrderCartPage from './components/OrderCart.vue'
 import MenuPage from './components/MenuList.vue'
+import DefaultPage from './components/default.vue'
 
 
 Vue.config.productionTip = false
@@ -38,32 +39,55 @@ const User = {
   `
 }
 
+var opened = false;
+
+const checkOpen = () => (to, from, next) => {
+  if(!opened) {
+    console.log("defa");
+      next('/default');
+  }
+  else{
+    next();
+  }
+  // next('/orderHistory');
+
+};
+
 
 const MenuTab = { template: '<div></div>' }
 
 const routes = [
   {
-    path: '/index.html', redirect: '/home' 
+    path: '/index.html', redirect: '/home'
   },
   {
     path: '/',
-    component: MainPage
+    component: MainPage,
+    // beforeEnter: checkOpen()
   },
   {
     path: '/home',
-    component: MainPage
+    component: MainPage,
+    // beforeEnter: checkOpen()
+  },
+  {
+    path: '/default',
+    component: DefaultPage
   },
   {
     path: '/orderHistory',
-    component: OrderHistoryPage
+    component: OrderHistoryPage,
+    // beforeEnter: checkOpen()
   },
   {
     path: '/orderCart',
-    component: OrderCartPage
+    component: OrderCartPage,
+    // beforeEnter: checkOpen()
   },
   {
     path: '/menu',
-    component: MenuPage
+    component: MenuPage,
+    // beforeEnter: checkOpen()
   },
   {
       path: '/menuTab/:id', component: MenuPage,
@@ -74,24 +98,45 @@ const routes = [
         { path: 'side', component: MenuTab },
 
 
-        // ...또 다른 서브 라우트
       ]
     }
 
- // {
- //   path: '/home',
- //   component: HomePage
- // },
-
 ];
+
+
+
+function check() {
+  axios
+  .get('https://ow696its6d.execute-api.ap-northeast-2.amazonaws.com/v1/master')
+  .then((res) =>  {
+    console.log(res);
+    if(res.data.Items[0].open) {
+      opened = true;
+      return true;
+    }
+    else{
+      opened = false;
+      return true;
+    }
+  });
+};
 
 const router = new VueRouter({
   mode: 'history',
   routes
 });
 
+// router.beforeEach(async (to, from, next) => {
+//   if(await check()) {
+//     next();
+//   }
+// });
+
 new Vue({
   el: '#app',
+  created() {
+    console.log("created");
+  },
   router,
   render: h => h(App)
 }).$mount('#app')

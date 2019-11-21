@@ -5,11 +5,9 @@
           <md-button class="md-icon-button" @click="back()">
             <md-icon>arrow_back</md-icon>
           </md-button>
-          <p class="md-title">
-            <div class="">
+          <p class="md-title" style="padding-left:20px;">
               Farms Barley
-              pizza
-            </div>
+              Pizza
           </p>
         </md-app-toolbar>
       </md-app>

@@ -126,21 +126,24 @@ export default {
     deleteList: function() {
       var temp = JSON.parse(VueCookies.get('menu'));
 
-      for(var i=0 ; i<this.selected.length ; i++) {
-          console.log("delete", this.selected[i].id);
-          this.orderList.splice(this.selected[i].id-1, 1);
-          temp.splice(this.selected[i].id-1, 1);
-      }
-      console.log(JSON.parse(VueCookies.get('menu')));
-
-
       // console.log(this.orderList);
+      // console.log(this.selected);
+      // console.log(temp);
+
+      for(var i=0 ; i<this.selected.length ; i++) {
+
+        var idx = this.orderList.findIndex(x=> x.id === this.selected[i].id);
+        this.orderList.splice(idx,1);
+        temp.splice(idx, 1);
+      }
+      // console.log(JSON.parse(VueCookies.get('menu')));
+      // // console.log(this.orderList);
       VueCookies.set('menu', JSON.stringify(temp));
 
     },
     createMenuData: function() {
 
-      console.log(JSON.parse(VueCookies.get('menu')));
+      console.log("menuDATA", JSON.parse(VueCookies.get('menu')));
       var jsonData = JSON.parse(VueCookies.get('menu'));
 
       if(jsonData == null) jsonData = {};
@@ -153,7 +156,7 @@ export default {
 
       for(var num=0 ; num<cnt ; num++) {
         var menuId = jsonData[num].id;
-        console.log(menuId);
+        // console.log(menuId);
         orderName = "";
 
         if(menuId.slice(0,1) == 'p') {
@@ -190,8 +193,8 @@ export default {
             }
           }
 
-          console.log(orderPrice);
-          console.log(jsonData[num].size);
+          // console.log(orderPrice);
+          // console.log(jsonData[num].size);
 
 
           switch (jsonData[num].size) {
@@ -209,7 +212,7 @@ export default {
               break;
           }
 
-          console.log(orderName, orderPrice);
+          // console.log(orderName, orderPrice);
 
 
           switch (jsonData[num].crust) {
@@ -281,9 +284,9 @@ export default {
 
           }
         }
-        console.log(orderData);
-        orderData = {"name": orderName, "price": orderPrice+"원/"+jsonData[num].quantity+"개", "id": num+1};
 
+        orderData = {"name": orderName, "price": orderPrice+"원/"+jsonData[num].quantity+"개", "id": num+1};
+        console.log(orderData);
         if(Object.keys(orderData).length !== 0) {
             this.PRICE.push(orderPrice);
             this.orderList.push(orderData);
@@ -296,7 +299,7 @@ export default {
 
 
 
-      console.log("price", this.PRICE);
+      // console.log("price", this.PRICE);
     },
     buy: function() {
       var params = new Object();
