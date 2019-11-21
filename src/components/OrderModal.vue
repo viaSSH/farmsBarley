@@ -2,7 +2,8 @@
   <div>
     <md-dialog :md-active.sync="showDialog" class="fb-order-modal" :md-click-outside-to-close=false @md-clicked-outside="toggle()">
     <!-- <md-dialog> -->
-      <md-dialog-title>{{modalType}}</md-dialog-title>
+      <!-- <md-dialog-title>{{modalType}}</md-dialog-title> -->
+      <md-dialog-title>TEST {{currentPrice}}원 TEST</md-dialog-title>
 
       <md-dialog-content>
         <!-- <p>zzz</p> -->
@@ -17,7 +18,7 @@
             </div>
 
             <div v-if="modalType=='pizza'" class="md-layout-item md-size-100">
-              <b-form-group id="input-group-2" label="반반 선택" label-for="input-2">
+              <b-form-group id="input-group-2" label="반반 선택 +1000원" label-for="input-2">
                 <b-form-select variant="primary" class="fb-select-box" v-model="pizzaHalfSelected" :options="pizzaHalfOptions"></b-form-select>
               </b-form-group>
             </div>
@@ -56,8 +57,8 @@
               </b-form-group>
             </div>
 
-            <div v-if="modalType=='pizza'"  class="md-layout-item md-size-50">
-              <b-form-group id="input-group-3" label="크러스트+1000원" label-for="input-3">
+            <div v-if="modalType=='pizza' && (selectedId.slice(0,2)=='ps' || selectedId.slice(0,3)=='ppa' || selectedId.slice(0,3)=='ppc')"  class="md-layout-item md-size-50">
+              <b-form-group id="input-group-3" label="크러스트" label-for="input-3">
                 <b-form-select class="fb-select-box" v-model="pizzaCrustSelectd" :options="pizzaCrustOptions"></b-form-select>
               </b-form-group>
             </div>
@@ -186,7 +187,12 @@ VueCookies.config('7d')
 
       sideOptions: [],
       menuquantity: 1,
-      orderData: []
+      orderData: [],
+      priceBySize: [],
+      currentPrice: 0,
+      pizzaPrice: 0,
+      halfPrice: 0,
+      crustPrice: 0
 
     }),
     watch: {
@@ -203,6 +209,8 @@ VueCookies.config('7d')
               }
               this.pizzaSizeOptions.push({text: 'L', value: 'large'});
               this.pizzaSizeOptions.push({text: 'B', value: 'big'});
+
+              this.priceBySize = menuData.menu.pizza[0].price;
           }
           if(newV.slice(1,3) == 'pa') {
               for(var i=0 ; i<menuData.menu.pizza[1].type.length ; i++) {
@@ -210,6 +218,10 @@ VueCookies.config('7d')
               }
               this.pizzaSizeOptions.push({text: 'L', value: 'large'});
               this.pizzaSizeOptions.push({text: 'B', value: 'big'});
+              this.priceBySize = menuData.menu.pizza[1].price;
+          }
+          if(newV.slice(1,3) == 'pa') {
+            this.priceBySize = menuData.menu.pizza[2].price;
           }
           if(newV.slice(1,3) == 'pc') {
               for(var i=0 ; i<menuData.menu.pizza[3].type.length ; i++) {
@@ -217,19 +229,25 @@ VueCookies.config('7d')
               }
               this.pizzaSizeOptions.push({text: 'L', value: 'large'});
               this.pizzaSizeOptions.push({text: 'B', value: 'big'});
-
+              this.priceBySize = menuData.menu.pizza[3].price;
           }
           if(newV.slice(1,2) == 'c') {
               for(var i=0 ; i<menuData.menu.pizza[4].type.length ; i++) {
                 this.pizzaHalfOptions.push({text: "반반 - " + menuData.menu.pizza[4].type[i].name,  value: menuData.menu.pizza[4].type[i].id});
               }
               this.pizzaSizeOptions.push({text: 'L', value: 'large'});
+              this.priceBySize = menuData.menu.pizza[4].price;
           }
           if(newV.slice(1,2) == 'b') {
               for(var i=0 ; i<menuData.menu.pizza[6].type.length ; i++) {
                 this.pizzaHalfOptions.push({text: "반반 - " + menuData.menu.pizza[6].type[i].name,  value: menuData.menu.pizza[6].type[i].id});
               }
+              this.priceBySize = menuData.menu.pizza[5].price;
           }
+
+
+          this.pizzaPrice = this.priceBySize[0];
+          this.currentPrice = this.pizzaPrice;
         }
 
         // [
@@ -238,6 +256,73 @@ VueCookies.config('7d')
         //   { text: 'B', value: 'big' , disabled:true}
         // ];
 
+      },
+      pizzaHalfSelected: function(newV, oldV) {
+        console.log(newV, oldV);
+        if(newV != "default") {
+          this.halfPrice = 1000;
+        }
+        else{
+          this.halfPrice = 0;
+        }
+        this.currentPrice = this.crustPrice + this.pizzaPrice + this.halfPrice;
+        // if(oldV == "default" && newV != "default") {
+        //   this.currentPrice += 1000;
+        // }
+        // else if(newV == "default" && oldV != "default") {
+        //   this.currentPrice -= 1000;
+        // }
+      },
+      pizzaSizeSelected: function(newV, oldV) {
+        console.log(newV, oldV);
+
+        if(this.pizzaCrustSelectd == "no") {
+          this.crustPrice = 0;
+        }
+
+        if(newV == "medium"){
+          this.pizzaPrice = this.priceBySize[0];
+          if(this.pizzaCrustSelectd == "yes") {
+            this.crustPrice = 3500;
+          }
+        }
+        else if(newV == "large") {
+          this.pizzaPrice = this.priceBySize[1];
+          if(this.pizzaCrustSelectd == "yes") {
+            this.crustPrice = 4500;
+          }
+        }
+        else if(newV == "big") {
+          this.pizzaPrice = this.priceBySize[2];
+          if(this.pizzaCrustSelectd == "yes") {
+            this.crustPrice = 5500;
+          }
+        }
+
+
+        this.currentPrice = this.crustPrice + this.pizzaPrice + this.halfPrice;
+      },
+      pizzaCrustSelectd: function(newV, oldV) {
+        console.log(newV, oldV);
+        if(newV == "yes") {
+          if(this.pizzaSizeSelected == "medium") {
+            this.crustPrice = 3500;
+          }
+          else if(this.pizzaSizeSelected == "large") {
+            this.crustPrice = 4500;
+          }
+          else if(this.pizzaSizeSelected == "big") {
+            this.crustPrice = 5500;
+          }
+        }
+        else{
+          this.crustPrice = 0;
+        }
+
+        this.currentPrice = this.crustPrice + this.pizzaPrice + this.halfPrice;
+      },
+      menuquantity: function(newV, oldV) {
+        this.currentPrice = (this.crustPrice + this.pizzaPrice + this.halfPrice) * newV;
       }
     },
     created: function() {

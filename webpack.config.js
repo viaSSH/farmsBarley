@@ -1,11 +1,13 @@
 var path = require('path')
 var webpack = require('webpack')
+require("babel-polyfill");
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   // mode: 'development',
-  entry: './src/main.js',
+  // entry: './src/main.js',
+  entry: ["babel-polyfill", './src/main.js'],
   // pages: {
   //   index: {
   //     entry: 'src/main.js',

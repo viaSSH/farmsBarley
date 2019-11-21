@@ -13,8 +13,8 @@
             <md-list slot="md-expand">
               <div class="md-layout fb-menu-price">
                 <span class="md-layout-item md-size-33">M {{menu.price[0]}}</span>
-                <span class="md-layout-item md-size-33">L {{menu.price[1]}}</span>
-                <span class="md-layout-item md-size-33">B {{menu.price[2]}}</span>
+                <span class="md-layout-item md-size-33" v-if="menu.price[1]!=null">L {{menu.price[1]}}</span>
+                <span class="md-layout-item md-size-33" v-if="menu.price[2]!=null">B {{menu.price[2]}}</span>
               </div>
 
               <div  class="md-layout fb-menu-container">
@@ -49,11 +49,14 @@
             <span class="md-list-item-text fb-menu-list">{{menu.category}}</span>
 
             <md-list slot="md-expand">
-              <!-- <div class="md-layout fb-menu-price">
-                <span class="md-layout-item md-size-33">M {{menu.price[0]}}</span>
-                <span class="md-layout-item md-size-33">L {{menu.price[1]}}</span>
-                <span class="md-layout-item md-size-33">B {{menu.price[2]}}</span>
-              </div> -->
+              <div class="md-layout fb-menu-price" v-if="menu.category=='후라이드' ">
+                <span class="md-layout-item md-size-33">한마리 {{menu.price[0]}}</span>
+                <span class="md-layout-item md-size-33">두마리 {{menu.price[1]}}</span>
+              </div>
+              <div class="md-layout fb-menu-price" v-if="menu.category=='컵치킨' ">
+                <span class="md-layout-item md-size-33">반마리 {{menu.price[0]}}</span>
+                <span class="md-layout-item md-size-33">미니컵 {{menu.price[1]}}</span>
+              </div>
 
               <div  class="md-layout fb-menu-container">
                 <md-list-item v-for="type in menu.type" :key="type.id" class="md-layout-item md-size-50 fb-menu-card">

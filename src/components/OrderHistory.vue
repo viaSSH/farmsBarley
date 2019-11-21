@@ -22,10 +22,27 @@
         <div class="md-layout" v-if="menu.makedFood==0">
           <!-- <span>약 30분 소요 예정</span> -->
           <!-- <span class="md-layout-item md-size-25" :class="{'item-bold': isAfter(menu.state, menu.startTime, menu.makingTime)==1}" >주문접수</span> -->
-          <span class="md-layout-item md-size-25" :class="{'item-bold': menu.state==0}" >주문접수</span>
+
+          <div class="md-layout-item md-size-25 fb-state-box" :class="{'item-bold': menu.state==0}">
+              <img class="" src="/src/assets/s1.png" width="48" height="48" alt="">
+              <span>주문접수</span>
+          </div>
+          <div class="md-layout-item md-size-25 fb-state-box" :class="{'item-bold': menu.state==1 && isAfter(menu.leftTime, menu.makingTime) == 1}">
+              <img class="" src="/src/assets/s2.png" width="48" height="48" alt="">
+              <span>토핑 중</span>
+          </div>
+          <div class="md-layout-item md-size-25 fb-state-box" :class="{'item-bold': menu.state==1 && isAfter(menu.leftTime, menu.makingTime) == 2}">
+              <img class="" src="/src/assets/s3.png" width="48" height="48" alt="">
+              <span>굽는 중</span>
+          </div>
+          <div class="md-layout-item md-size-25 fb-state-box" :class="{'item-bold': menu.state==2 }">
+              <img class="" src="/src/assets/s4.png" width="48" height="48" alt="">
+              <span>포장완료</span>
+          </div>
+          <!-- <span class="md-layout-item md-size-25" :class="{'item-bold': menu.state==0}" >주문접수</span>
           <span class="md-layout-item md-size-25" :class="{'item-bold': menu.state==1 && isAfter(menu.leftTime, menu.makingTime) == 1}" >토핑 중</span>
           <span class="md-layout-item md-size-25" :class="{'item-bold': menu.state==1 && isAfter(menu.leftTime, menu.makingTime) == 2}" >굽는 중</span>
-          <span class="md-layout-item md-size-25" :class="{'item-bold': menu.state==2 }" >포장완료</span>
+          <span class="md-layout-item md-size-25" :class="{'item-bold': menu.state==2 }" >포장완료</span> -->
 
           <!-- <span style="text-align:center; font-size:16px; font-weight:800;">예정 완성 시간 {{calEndTime(menu.makeStartTime, menu.makingTime)}}</span> -->
           <span style="text-align:center; font-size:16px; font-weight:800;">예정 완성 시간 {{(Date.now()+(leftTime[index])*60*1000) | moment("HH시 mm분")}}</span>
@@ -167,5 +184,11 @@ export default {
 .item-bold {
   font-weight: 900;
   color: red;
+  background-color: blanchedalmond;
+}
+
+.fb-state-box {
+  text-align: center;
+  padding-top: 8px;
 }
 </style>

@@ -43,7 +43,7 @@ var opened = false;
 
 const checkOpen = () => (to, from, next) => {
   if(!opened) {
-    console.log("defa");
+    console.log("default Page");
       next('/default');
   }
   else{
@@ -68,7 +68,7 @@ const routes = [
   {
     path: '/home',
     component: MainPage,
-    // beforeEnter: checkOpen()
+    beforeEnter: checkOpen()
   },
   {
     path: '/default',
@@ -77,17 +77,17 @@ const routes = [
   {
     path: '/orderHistory',
     component: OrderHistoryPage,
-    // beforeEnter: checkOpen()
+    beforeEnter: checkOpen()
   },
   {
     path: '/orderCart',
     component: OrderCartPage,
-    // beforeEnter: checkOpen()
+    beforeEnter: checkOpen()
   },
   {
     path: '/menu',
     component: MenuPage,
-    // beforeEnter: checkOpen()
+    beforeEnter: checkOpen()
   },
   {
       path: '/menuTab/:id', component: MenuPage,
@@ -105,32 +105,18 @@ const routes = [
 
 
 
-function check() {
-  axios
-  .get('https://ow696its6d.execute-api.ap-northeast-2.amazonaws.com/v1/master')
-  .then((res) =>  {
-    console.log(res);
-    if(res.data.Items[0].open) {
-      opened = true;
-      return true;
-    }
-    else{
-      opened = false;
-      return true;
-    }
-  });
-};
-
 const router = new VueRouter({
   mode: 'history',
   routes
 });
 
-// router.beforeEach(async (to, from, next) => {
-//   if(await check()) {
-//     next();
-//   }
-// });
+router.beforeEach(async (to, from, next) => {
+  // if(await check()) {
+  //   next();
+  // }
+  next();
+});
+
 
 new Vue({
   el: '#app',
@@ -138,5 +124,33 @@ new Vue({
     console.log("created");
   },
   router,
-  render: h => h(App)
-}).$mount('#app')
+  render: h => h(App),
+  async mounted() {
+    try {
+      let response = await axios
+      .get('https://ow696its6d.execute-api.ap-northeast-2.amazonaws.com/v1/master')
+      .then((res) =>  {
+        console.log(res);
+        if(res.data.Items[0].open) {
+          opened = true;
+          // return true;
+        }
+        else{
+          opened = false;
+          // return false;
+        }
+      });
+    }catch(err) {
+      console.log(err);
+    }
+  }
+})
+
+// new Vue({
+//   el: '#app',
+//   created() {
+//     console.log("created");
+//   },
+//   router,
+//   render: h => h(App)
+// }).$mount('#app')

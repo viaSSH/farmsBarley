@@ -1,13 +1,16 @@
 <template>
-  <div class="">
-    hi
+  <div class="" style="text-align: center; font-size:36px; padding-top: 80px; color:#374e3c; font-weight:900;">
+
+    <p >영업 시간</p>
+    <p>10:00 ~ 21:00</p>
+    <p style="padding-top:20px; font-size:24px;">준비 중 입니다:)</p>
   </div>
 
 </template>
 
 <script>
 export default {
-  name: 'main-header',
+  name: 'default-state',
   methods: {
   }
 }
