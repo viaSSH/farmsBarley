@@ -25,11 +25,11 @@
           <span class="md-layout-item md-size-25" :class="{'item-bold': menu.state==0}" >주문접수</span>
           <span class="md-layout-item md-size-25" :class="{'item-bold': menu.state==1 && isAfter(menu.leftTime, menu.makingTime) == 1}" >토핑 중</span>
           <span class="md-layout-item md-size-25" :class="{'item-bold': menu.state==1 && isAfter(menu.leftTime, menu.makingTime) == 2}" >굽는 중</span>
-          <span class="md-layout-item md-size-25" :class="{'item-bold': menu.state==1 && isAfter(menu.leftTime, menu.makingTime) == 3}" >포장완료</span>
+          <span class="md-layout-item md-size-25" :class="{'item-bold': menu.state==2 }" >포장완료</span>
 
           <!-- <span style="text-align:center; font-size:16px; font-weight:800;">예정 완성 시간 {{calEndTime(menu.makeStartTime, menu.makingTime)}}</span> -->
           <span style="text-align:center; font-size:16px; font-weight:800;">예정 완성 시간 {{(Date.now()+(leftTime[index])*60*1000) | moment("HH시 mm분")}}</span>
-          <span style="text-align:center;" >약 {{menu.leftTime}}분 후에 맛있는 피자가 완성됩니다.</span>
+          <span style="text-align:center;" >약 {{Math.ceil(menu.leftTime)}}분 후에 맛있는 피자가 완성됩니다.</span>
           <span style="text-align:center;" >미리 매장에 와서 대기해주세요</span>
         </div>
 
@@ -69,12 +69,15 @@ export default {
     isAfter: function(t, making) {
       var now = Date.now();
 
-      console.log(making);
+      // console.log(making);
       if(t < making.oven) {
         return 2;
       }
-      else if(t < making.oven + making.topping) {
+      else if(t < making.oven + making.topping + making.cutting) {
         return 1;
+      }
+      else{
+        // console.log("time error!");
       }
 
 
@@ -94,6 +97,14 @@ export default {
       .get('https://ow696its6d.execute-api.ap-northeast-2.amazonaws.com/v1?id='+id)
       .then((response) =>  {
         console.log(response);
+        // for(var i=0 ; i<response.data.Count ; i++) {
+        //   if(response.data.Items[i].state)
+        // }
+        response.data.Items.sort(function(a,b) {
+          //   return a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
+              return a.orderIndex < b.orderIndex ? -1 : a.orderIndex > b.orderIndex ? 1 : 0;
+          });
+
         this.num = response.data.Count;
         if(this.num > 0) {
             this.orderTime = response.data.Items[0].startTime;
@@ -101,7 +112,14 @@ export default {
         // this.orderTime = response.data.Items[0].startTime;
         this.MENU = response.data.Items;
         for(var i=0 ; i< this.num ; i++) {
-            this.calLeftTime(i, response.data.Items[i].orderCode);
+            if(response.data.Items[i].makedFood == 1) {
+              this.MENU[i].leftTime = 0;
+              this.leftTime.push(0);
+            }
+            else{
+              this.calLeftTime(i, response.data.Items[i].orderCode);
+            }
+
         }
 
       })
@@ -110,6 +128,7 @@ export default {
       axios
       .get('https://ow696its6d.execute-api.ap-northeast-2.amazonaws.com/v1/time?orderCode='+code)
       .then((response) =>  {
+        console.log(response);
         console.log(id, code, response.data.leftTime);
         this.MENU[id].leftTime = response.data.leftTime;
 

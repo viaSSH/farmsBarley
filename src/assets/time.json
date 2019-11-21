@@ -61,6 +61,11 @@
           "total": 9
       }
     },
+    "piecePizza": {
+      "medium": {
+          "total": 1.2
+      }
+    },
     "chicken": {
       "medium": {
           "total": 0.3

@@ -168,6 +168,7 @@ export default {
                 orderName = orderName + menuData.menu.pizza[i].type[j].name + "/";
 
                 orderPrice = menuData.menu.pizza[i].price;
+                //
               }
 
             }
@@ -189,12 +190,16 @@ export default {
             }
           }
 
+          console.log(orderPrice);
+          console.log(jsonData[num].size);
+
+
           switch (jsonData[num].size) {
-            case 'large':
+            case 'medium':
               orderName = orderName + "미디움/";
               orderPrice = orderPrice[0];
               break;
-            case 'medium':
+            case 'large':
               orderName = orderName + "라지/";
               orderPrice = orderPrice[1];
               break;
@@ -204,6 +209,7 @@ export default {
               break;
           }
 
+          console.log(orderName, orderPrice);
 
 
           switch (jsonData[num].crust) {
@@ -388,6 +394,18 @@ export default {
               default:
                     console.log("size err3");
             }
+          }
+          else if(jsonData[i].id.slice(1, 2) == 'j') {
+            switch (jsonData[i].size) {
+              case 'medium':
+                  params.order[i].makingTime = timeData.piecePizza.medium;
+                  break;
+              default:
+                    console.log("size err4");
+            }
+          }
+          else{
+            console.log("size err 5");
           }
         }
         else if(jsonData[i].id.slice(0, 1) == 'c') {
