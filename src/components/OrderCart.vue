@@ -51,6 +51,9 @@
                   <!-- <md-table-cell md-label="Job Title" md-sort-by="title">{{ item.title }}</md-table-cell> -->
                 </md-table-row>
               </md-table>
+              <div class="" style="text-align:right;">
+                <span style="font-weight:900; font-size:18px;">총 금액 {{currentPrice.toLocaleString()}}원</span>
+              </div>
             </md-card-content>
 
             <md-card-actions style="justify-content: space-evenly">
@@ -112,7 +115,8 @@ export default {
     spinnerOn: true,
     isLoading: false,
     fullPage: true,
-    PRICE: []
+    PRICE: [],
+    currentPrice: 0
     // curTime: new Date().format("yyyy")
 
 
@@ -139,6 +143,7 @@ export default {
       // console.log(JSON.parse(VueCookies.get('menu')));
       // // console.log(this.orderList);
       VueCookies.set('menu', JSON.stringify(temp));
+      this.createMenuData();
 
     },
     createMenuData: function() {
@@ -151,6 +156,9 @@ export default {
       var orderData = new Object();
       var orderName;
       var orderPrice;
+      this.currentPrice = 0;
+      this.orderList = [];
+      this.PRICE = [];
 
       if(cnt == undefined) cnt = 0;
 
@@ -221,7 +229,16 @@ export default {
               break;
             case 'yes':
               orderName = orderName + "크러스트추가/";
-              orderPrice = orderPrice + 1000;
+              if(jsonData[num].size == "medium") {
+                  orderPrice = orderPrice + 3500;
+              }
+              else if(jsonData[num].size == "large") {
+                  orderPrice = orderPrice + 4500;
+              }
+              else if(jsonData[num].size == "big") {
+                  orderPrice = orderPrice + 5500;
+              }
+
               break;
           }
 
@@ -236,7 +253,7 @@ export default {
 
         }
         else if(menuId.slice(0,1) == 'c') {
-          for(var i=0 ; i<3 ; i++) {
+          for(var i=0 ; i<2 ; i++) {
             for(var j=0 ; j<menuData.menu.chicken[i].type.length ; j++) {
               if(menuData.menu.chicken[i].type[j].id == menuId) {
                 orderName = orderName + menuData.menu.chicken[i].category + "/";
@@ -252,10 +269,11 @@ export default {
           }
 
           if(jsonData[num].option != "s0") {
-            for(var i=0 ; i<menuData.menu.chicken[2].type.length ; i++) {
-              if(menuData.menu.chicken[2].type[i].id == jsonData[num].option) {
+            for(var i=0 ; i<menuData.menu.chicken[1].type.length ; i++) {
+              if(menuData.menu.chicken[1].type[i].id == jsonData[num].option) {
                 // console.log(menuData.menu.chicken[2].type[i].id);
-                orderName = orderName + menuData.menu.chicken[2].type[i].name + "/";
+                orderName = orderName + menuData.menu.chicken[1].type[i].name + "/";
+                orderPrice = orderPrice + 1000;
               }
             }
           }
@@ -263,11 +281,11 @@ export default {
         else if(menuId.slice(0,1) == 's') {
           if(menuId.slice(1,2) == 's') {
             console.log("소스추가");
-            for(var i=0 ; i<menuData.menu.chicken[2].type.length ; i++) {
-              if(menuData.menu.chicken[2].type[i].id == menuId) {
+            for(var i=0 ; i<menuData.menu.chicken[1].type.length ; i++) {
+              if(menuData.menu.chicken[1].type[i].id == menuId) {
                 // console.log(menuData.menu.chicken[2].type[i].id);
-                orderName = orderName + menuData.menu.chicken[2].type[i].name + "/";
-                orderPrice = menuData.menu.chicken[2].type[i].price;
+                orderName = orderName + menuData.menu.chicken[1].type[i].name + "/";
+                orderPrice = menuData.menu.chicken[1].type[i].price;
               }
             }
           }
@@ -288,8 +306,15 @@ export default {
         orderData = {"name": orderName, "price": orderPrice+"원/"+jsonData[num].quantity+"개", "id": num+1};
         console.log(orderData);
         if(Object.keys(orderData).length !== 0) {
-            this.PRICE.push(orderPrice);
+            // this.PRICE.push(orderPrice);
+            const vaildPrice = orderPrice*jsonData[num].quantity;
+            if(vaildPrice < 0) {
+              console.error("price error");
+            }
+            this.PRICE.push(vaildPrice);
             this.orderList.push(orderData);
+
+            this.currentPrice += vaildPrice;
         }
       }
 
@@ -299,7 +324,7 @@ export default {
 
 
 
-      // console.log("price", this.PRICE);
+      console.log("price", this.PRICE);
     },
     buy: function() {
       var params = new Object();

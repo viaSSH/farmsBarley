@@ -1,11 +1,12 @@
 <template>
   <!-- <md-bottom-bar class="md-accent fb-bottom-bar" md-type="shift" @md-changed="checkNewPosts"> -->
-  <md-bottom-bar class="md-accent fb-bottom-bar" md-type="shift" :md-active-item="activeTab">
+  <!-- <md-bottom-bar class="md-accent fb-bottom-bar" md-type="shift" :md-active-item="activeTab"> -->
+  <md-bottom-bar class="md-accent fb-bottom-bar" md-type="fixed" :md-active-item="activeTab" >
   <!-- <md-bottom-bar class="md-accent fb-bottom-bar" md-type="shift"> -->
 
-    <md-bottom-bar-item id="tab_history"   to="/orderHistory" md-label="주문내역" md-icon="list" @click.native="tabChange('history')"></md-bottom-bar-item>
-    <md-bottom-bar-item id="tab_home"   to="/home" md-label="" md-icon="home" @click.native="tabChange('home')"></md-bottom-bar-item>
-    <md-bottom-bar-item id="tab_cart"   to="/orderCart" md-label="장바구니" md-icon="shopping_cart" @click.native="tabChange('cart')"></md-bottom-bar-item>
+    <md-bottom-bar-item class="fb-bottom-button" id="tab_history"   to="/orderHistory" md-label="주문내역" md-icon="list" @click.native="tabChange('history')"></md-bottom-bar-item>
+    <md-bottom-bar-item class="fb-bottom-button" id="tab_home"   to="/home" md-label="" md-icon="home" @click.native="tabChange('home')"></md-bottom-bar-item>
+    <md-bottom-bar-item class="fb-bottom-button" id="tab_cart"   to="/orderCart" md-label="장바구니" md-icon="shopping_cart" @click.native="tabChange('cart')"></md-bottom-bar-item>
   </md-bottom-bar>
   <!-- <md-bottom-bar class="fb-bottom-bar" md-sync-route >
     <md-bottom-bar-item to="/cc" md-label="주문내역" md-icon="list"></md-bottom-bar-item>
@@ -61,10 +62,16 @@
     position: fixed;
     bottom:0px;
     z-index: 999;
+    background-color: #374e3c !important;
     /* background-color: #374e3c !important; */
 
 
   }
+
+  .fb-bottom-button {
+    color: white;
+  }
+  
 
 
 

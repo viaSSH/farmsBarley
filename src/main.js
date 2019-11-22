@@ -58,7 +58,7 @@ const MenuTab = { template: '<div></div>' }
 
 const routes = [
   {
-    path: '/index.html', redirect: '/home'
+    path: '/index.html', redirect: '/'
   },
   {
     path: '/',
@@ -68,7 +68,7 @@ const routes = [
   {
     path: '/home',
     component: MainPage,
-    beforeEnter: checkOpen()
+    // beforeEnter: checkOpen()
   },
   {
     path: '/default',

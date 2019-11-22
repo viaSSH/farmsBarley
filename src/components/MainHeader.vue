@@ -6,8 +6,8 @@
             <md-icon>arrow_back</md-icon>
           </md-button>
           <p class="md-title" style="padding-left:20px;">
-              Farms Barley
-              Pizza
+              Farms Barley Pizza
+
           </p>
         </md-app-toolbar>
       </md-app>

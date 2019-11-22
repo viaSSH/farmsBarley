@@ -225,5 +225,11 @@ export default {
   .md-list-item-content
     padding: 4px 8px !important;
 
+  .md-bottom-bar.md-theme-default.md-accent.md-type-fixed .md-icon
+    color: white;
+  .md-bottom-bar .md-bottom-bar-item .md-button-content
+    color: white;
+  .md-bottom-bar.md-theme-default.md-accent.md-type-fixed .md-bottom-bar-item.md-active .md-icon
+    color: white;
 
 </style>

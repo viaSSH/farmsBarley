@@ -46,7 +46,8 @@
 
           <!-- <span style="text-align:center; font-size:16px; font-weight:800;">예정 완성 시간 {{calEndTime(menu.makeStartTime, menu.makingTime)}}</span> -->
           <span style="text-align:center; font-size:16px; font-weight:800;">예정 완성 시간 {{(Date.now()+(leftTime[index])*60*1000) | moment("HH시 mm분")}}</span>
-          <span style="text-align:center;" >약 {{Math.ceil(menu.leftTime)}}분 후에 맛있는 피자가 완성됩니다.</span>
+          <span style="text-align:center;" v-if="menu.leftTime>=0">약 {{Math.ceil(menu.leftTime)}}분 후에 맛있는 피자가 완성됩니다.</span>
+          <span style="text-align:center;" v-if="menu.leftTime<0">곧 맛있는 피자가 완성됩니다.</span>
           <span style="text-align:center;" >미리 매장에 와서 대기해주세요</span>
         </div>
 

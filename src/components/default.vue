@@ -3,7 +3,7 @@
 
     <p >영업 시간</p>
     <p>10:00 ~ 21:00</p>
-    <p style="padding-top:20px; font-size:24px;">준비 중 입니다:)</p>
+    <!-- <p style="padding-top:20px; font-size:24px;">준비 중 입니다:)</p> -->
   </div>
 
 </template>

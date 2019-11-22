@@ -8,7 +8,7 @@
           "type": [
             {
               "name": "김치불고기",
-              "imgUrl":"../슈퍼슈프림.png",
+              "imgUrl":"../assets/pizza.jpg",
               "id": "ps1"
             },
             {
@@ -17,7 +17,7 @@
               "id": "ps2"
             },
             {
-              "name": "파인애플",
+              "name": "베이컨포테이토",
               "imgUrl":"../슈퍼슈프림3.png",
               "id": "ps3"
             },
@@ -60,6 +60,11 @@
               "name": "루꼴라 베이컨",
               "imgUrl":"../슈퍼슈프림3.png",
               "id": "ps11"
+            },
+            {
+              "name": "파인애플",
+              "imgUrl":"../슈퍼슈프림3.png",
+              "id": "ps12"
             }
           ]
       },
@@ -69,7 +74,7 @@
         "type": [
             {
               "name": "불고기",
-              "imgUrl":"../골드슈프림.png",
+              "imgUrl":"../assets/pizza.jpg",
               "detail": "존맛탱",
               "id": "ppa1"
             },
@@ -110,16 +115,10 @@
         "price": [15500,19000,31000],
         "type": [
             {
-              "name": "갈릭비프",
+              "name": "갈릭비프&칠리새우",
               "imgUrl":"../골드슈프림.png",
               "detail": "존맛탱",
               "id": "ppc1"
-            },
-            {
-              "name": "칠리새우",
-              "imgUrl":"../골드슈프림.png",
-              "detail": "존맛탱",
-              "id": "ppc2"
             }
           ]
       },
@@ -138,6 +137,18 @@
               "imgUrl":"../골드슈프림.png",
               "detail": "존맛탱",
               "id": "pc2"
+            },
+            {
+              "name": "핫치킨",
+              "imgUrl":"../골드슈프림.png",
+              "detail": "존맛탱",
+              "id": "pc3"
+            },
+            {
+              "name": "루꼴라 토마토",
+              "imgUrl":"../골드슈프림.png",
+              "detail": "존맛탱",
+              "id": "pc4"
             }
           ]
       },
@@ -148,14 +159,17 @@
             {
               "name": "페파로니",
               "imgUrl":"../골드슈프림.png",
-              "detail": "존맛탱",
               "id": "pj1"
             },
             {
-              "name": "페파로니",
+              "name": "베이컨 포테이토",
               "imgUrl":"../골드슈프림.png",
-              "detail": "존맛탱",
               "id": "pj2"
+            },
+            {
+              "name": "김치불고기",
+              "imgUrl":"../골드슈프림.png",
+              "id": "pj3"
             }
           ]
       },
@@ -165,23 +179,71 @@
         "type": [
             {
               "name": "김치불고기",
-              "imgUrl":"../골드슈프림.png",
-              "detail": "존맛탱",
+              "imgUrl":"../assets/pizza.jpg",
               "id": "pb1"
             },
             {
-              "name": "김치베이컨",
-              "imgUrl":"../골드슈프림.png",
-              "detail": "존맛탱",
+              "name": "슈프림",
+              "imgUrl":"../슈퍼슈프림2.png",
               "id": "pb2"
+            },
+            {
+              "name": "베이컨포테이토",
+              "imgUrl":"../슈퍼슈프림3.png",
+              "id": "pb3"
+            },
+            {
+              "name": "핫치킨",
+              "imgUrl":"../슈퍼슈프림3.png",
+              "id": "pb4"
+            },
+            {
+              "name": "불고기",
+              "imgUrl":"../슈퍼슈프림3.png",
+              "id": "pb5"
+            },
+            {
+              "name": "고구마",
+              "imgUrl":"../슈퍼슈프림3.png",
+              "id": "pb6"
+            },
+            {
+              "name": "페파로니",
+              "imgUrl":"../슈퍼슈프림3.png",
+              "id": "pb7"
+            },
+            {
+              "name": "루꼴라 토마토",
+              "imgUrl":"../슈퍼슈프림3.png",
+              "id": "pb8"
+            },
+            {
+              "name": "김치베이컨",
+              "imgUrl":"../슈퍼슈프림3.png",
+              "id": "pb9"
+            },
+            {
+              "name": "치즈",
+              "imgUrl":"../슈퍼슈프림3.png",
+              "id": "pb10"
+            },
+            {
+              "name": "루꼴라 베이컨",
+              "imgUrl":"../슈퍼슈프림3.png",
+              "id": "pb11"
+            },
+            {
+              "name": "파인애플",
+              "imgUrl":"../슈퍼슈프림3.png",
+              "id": "pb12"
             }
           ]
       }
     ],
     "chicken": [
       {
-        "category": "후라이드",
-        "price": [12500, 18500],
+        "category": "순살치킨",
+        "price": [12500, 18500, 7000, 4000],
         "type": [
           {
             "name": "한마리치킨",
@@ -194,34 +256,29 @@
             "imgUrl":"../두마리치킨.png",
             "price": 18500,
             "id": "c2"
+          },
+          {
+            "name": "반마리컵치킨",
+            "imgUrl":"../반마리치킨.png",
+            "price": 7000,
+            "id": "c3"
+          },
+          {
+            "name": "미니컵치킨",
+            "imgUrl":"../미니치킨.png",
+            "price": 4000,
+            "id": "c4"
           }
         ]
       },
-      {
-        "category": "컵치킨",
-        "price": [7000, 4000],
-          "type": [
-              {
-                "name": "반마리컵치킨",
-                "imgUrl":"../반마리치킨.png",
-                "price": 7000,
-                "id": "c3"
-              },
-              {
-                "name": "미니컵치킨",
-                "imgUrl":"../미니치킨.png",
-                "price": 4000,
-                "id": "c4"
-              }
-            ]
-         },
        {
          "category": "소스",
          "type": [
-           {"name":"양념 소스", "price":500, "id":"ss1"},
-           {"name":"허니갈릭 소스", "price":500, "id":"ss2"},
-           {"name":"치즈머스타드 소스", "price":500, "id":"ss3"},
-           {"name":"허니버터맛or매운맛 소스", "price":500, "id":"ss4"}
+           {"name":"양념 소스", "price":1000, "id":"ss1"},
+           {"name":"허니갈릭 소스", "price":1000, "id":"ss2"},
+           {"name":"치즈머스타드 소스", "price":1000, "id":"ss3"},
+           {"name":"허니버터 순핫맛 소스", "price":1000, "id":"ss4"},
+           {"name":"허니버터 매운맛 소스", "price":1000, "id":"ss5"}
          ]
        }
     ],
