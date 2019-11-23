@@ -95,7 +95,7 @@
             <md-list slot="md-expand">
               <div class="md-layout fb-menu-price" v-if="menu.category=='음료'">
                 <span class="md-layout-item md-size-50">0.5L: {{menu.price[0].toLocaleString()}}원</span>
-                <span class="md-layout-item md-size-50">1L: {{menu.price[1].toLocaleString()}}원</span>
+                <span class="md-layout-item md-size-50">2L: {{menu.price[1].toLocaleString()}}원</span>
               </div>
               <div class="md-layout fb-menu-price" v-if="menu.category=='파스타'">
                 <span class="md-layout-item md-size-100">M {{menu.price[0].toLocaleString()}}원</span>

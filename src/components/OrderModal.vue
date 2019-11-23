@@ -31,7 +31,7 @@
             </div>
 
             <div v-if="modalType=='chicken'"  class="md-layout-item md-size-50">
-              <b-form-group id="input-group-3" label="소스 선택" label-for="input-3">
+              <b-form-group id="input-group-3" label="치킨 1" label-for="input-3">
                 <b-form-select class="fb-select-box" v-model="chickenSauceSelected" :options="chickenSauceOptions"></b-form-select>
               </b-form-group>
             </div>
@@ -82,7 +82,7 @@
 
             <!-- for chicken -->
             <div v-if="modalType=='chicken' && selectedId=='c2'"  class="md-layout-item md-size-50">
-              <b-form-group id="input-group-5" label="치킨2 +1000원" label-for="input-5">
+              <b-form-group id="input-group-5" label="치킨2" label-for="input-5">
                 <b-form-select class="fb-select-box" v-model="chickenAddSauceSelectd" :options="chickenAddSauceOptions"></b-form-select>
               </b-form-group>
             </div>
@@ -191,7 +191,7 @@ VueCookies.config('7d')
       priceBySize: [],
       currentPrice: 0,
       pizzaPrice: 0, halfPrice: 0, crustPrice: 0,
-      chickenPrice: 0, saucePrice:0,
+      chickenPrice: 0, saucePrice:0, addSaucePrice: 0,
       sidePrice:0,
 
     }),
@@ -200,6 +200,9 @@ VueCookies.config('7d')
         console.log("selected", newV);
         this.pizzaHalfOptions = new Array();
         this.pizzaSizeOptions = new Array();
+
+        this.currentPrice=0; this.pizzaPrice=0; this.halfPrice=0; this.crustPrice=0;
+        this.chickenPrice=0; this.saucePrice=0; this.addSaucePrice=0; this.sidePrice=0;
 
         this.pizzaSizeOptions.push({text: 'M', value: 'medium'});
         this.pizzaHalfOptions.push({text: '선택없음', value: 'default'});
@@ -369,7 +372,7 @@ VueCookies.config('7d')
             this.currentPrice = (this.crustPrice + this.pizzaPrice + this.halfPrice) * this.menuquantity;
         }
         else if(this.chickenPrice != 0) {
-          this.currentPrice = (this.chickenPrice + this.saucePrice) * this.menuquantity;
+          this.currentPrice = (this.chickenPrice + this.saucePrice + this.addSaucePrice) * this.menuquantity;
         }
         else if(this.sidePrice != 0) {
           this.currentPrice = (this.sidePrice) * this.menuquantity;
@@ -384,7 +387,16 @@ VueCookies.config('7d')
         else{
           this.saucePrice = 0;
         }
-        this.currentPrice = (this.chickenPrice + this.saucePrice) * this.menuquantity;
+        this.currentPrice = (this.chickenPrice + this.saucePrice + this.addSaucePrice) * this.menuquantity;
+      },
+      chickenAddSauceSelectd: function(newV, oldV) {
+        if(newV != "s0") {
+          this.addSaucePrice = 1000;
+        }
+        else{
+          this.addSaucePrice = 0;
+        }
+        this.currentPrice = (this.chickenPrice + this.saucePrice + this.addSaucePrice) * this.menuquantity;
       }
     },
     created: function() {
@@ -414,7 +426,7 @@ VueCookies.config('7d')
         if(this.menuquantity < 1)
           this.menuquantity = 1;
 
-        console.log(e);
+        // console.log(e);
       },
       addToCart: function() {
         console.log("cart");
@@ -442,7 +454,7 @@ VueCookies.config('7d')
             if(this.chickenAddSauceSelectd != "s0") {
               this.orderData.push(
                 {"id": this.chickenAddSauceSelectd,
-                "quantity": 1});
+                "quantity": this.menuquantity});
             }
             break;
           case 'side':

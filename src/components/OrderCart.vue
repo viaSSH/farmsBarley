@@ -277,6 +277,9 @@ export default {
               }
             }
           }
+          else if(jsonData[num].option == "s0") {
+            orderName = orderName + "후라이드/";
+          }
         }
         else if(menuId.slice(0,1) == 's') {
           if(menuId.slice(1,2) == 's') {
