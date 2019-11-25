@@ -453,7 +453,9 @@ export default {
         }
 
 
-        if(jsonData[i].id.slice(0, 2) == 'sd' || jsonData[i].id.slice(0, 2) == 'ss') {
+        if(jsonData[i].id.slice(0, 2) == 'sd' || jsonData[i].id.slice(0, 2) == 'ss' ||
+          jsonData[i].id.slice(0, 2) == 'pj' || jsonData[i].id.slice(0, 1) == 'c'
+            ) {
           params.order[i].makedFood = 1;
         }
         // for no showing in master page
