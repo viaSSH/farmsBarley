@@ -4,9 +4,9 @@
     <div class="" v-if="MENU.length == 0">
       <span>주문내역이 없습니다 </span>
     </div>
-    <div class="">
+    <!-- <div class="">
         <span> - {{stdId}} test</span>
-    </div>
+    </div> -->
 
     <div class="md-layout-item md-size-90 fb-menuHistory-box"  v-for="(menu, index) in MENU" >
       <md-card>

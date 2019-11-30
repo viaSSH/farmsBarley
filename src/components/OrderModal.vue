@@ -3,7 +3,7 @@
     <md-dialog :md-active.sync="showDialog" class="fb-order-modal" :md-click-outside-to-close=false @md-clicked-outside="toggle()">
     <!-- <md-dialog> -->
       <!-- <md-dialog-title>{{modalType}}</md-dialog-title> -->
-      <md-dialog-title >TEST {{currentPrice.toLocaleString()}}원 TEST</md-dialog-title>
+      <md-dialog-title >예상금액 {{currentPrice.toLocaleString()}}원 </md-dialog-title>
 
       <md-dialog-content>
         <!-- <p>zzz</p> -->
@@ -224,7 +224,7 @@ VueCookies.config('7d')
               this.pizzaSizeOptions.push({text: 'B', value: 'big'});
               this.priceBySize = menuData.menu.pizza[1].price;
           }
-          if(newV.slice(1,3) == 'pa') {
+          if(newV.slice(1,3) == 'pb') {
             this.priceBySize = menuData.menu.pizza[2].price;
           }
           if(newV.slice(1,3) == 'pc') {
@@ -301,6 +301,7 @@ VueCookies.config('7d')
         // ];
         this.pizzaQuantitySelected = '1';
         this.menuquantity = 1;
+        this.pizzaSizeSelected = "medium";
 
       },
       pizzaHalfSelected: function(newV, oldV) {
@@ -321,6 +322,7 @@ VueCookies.config('7d')
       },
       pizzaSizeSelected: function(newV, oldV) {
         console.log(newV, oldV);
+        console.log(this.crustPrice, this.pizzaPrice,  this.halfPrice, this.menuquantity);
 
         if(this.pizzaCrustSelectd == "no") {
           this.crustPrice = 0;
@@ -345,6 +347,7 @@ VueCookies.config('7d')
           }
         }
 
+        // console.log(this.crustPrice, this.pizzaPrice,  this.halfPrice, this.menuquantity);
 
         this.currentPrice = (this.crustPrice + this.pizzaPrice + this.halfPrice) * this.menuquantity;
       },

@@ -59,8 +59,9 @@
             <md-card-actions style="justify-content: space-evenly">
               <!-- <md-button>Action</md-button> -->
               <!-- <span> <md-icon>access_time</md-icon> 약 30분 소요 예정</span> -->
-              <md-button class="md-raised md-accent fb-cart-list-action" @click="buy()">현금결제</md-button>
-              <md-button class="md-raised md-accent fb-cart-list-action" @click="buy()">카드결제</md-button>
+              <!-- <md-button class="md-raised md-accent fb-cart-list-action" @click="buy()">현금결제</md-button>
+              <md-button class="md-raised md-accent fb-cart-list-action" @click="buy()">카드결제</md-button> -->
+              <md-button class="md-raised md-accent fb-cart-list-action" @click="getPhoneNumber()">현장결제</md-button>
             </md-card-actions>
           </md-card>
         </div>
@@ -76,6 +77,34 @@
           <md-button class="md-raised md-accent fb-cart-list-action" to="/menu" >주문하기</md-button>
         </div>
       </div>
+
+      <!-- <md-dialog-confirm -->
+      <md-dialog-prompt
+        :md-active.sync="modalActive1"
+        v-model="numValue"
+        md-input-maxlength="11"
+        md-input-placeholder="ex)01012345678"
+        md-title="정보입력"
+        md-content="조리 완료 알람과 노쇼 방지를 위해 전화번호를 입력해주세요 ex)01012345678"
+        md-confirm-text="확인"
+        md-cancel-text="취소"
+        @md-confirm="onConfirm1" />
+
+      <md-dialog-confirm
+        :md-active.sync="modalActive2"
+        md-title="확인"
+        md-content="지금 주문하시면 취소가 불가능합니다. 노쇼시 위약금 10%가 추가된 금액을 내셔야합니다."
+        md-confirm-text="주문확인"
+        md-cancel-text="취소"
+        @md-confirm="onConfirm2" />
+
+      <md-dialog-confirm
+        :md-active.sync="modalActive3"
+        md-title="주문완료"
+        md-content="주문이 접수되었습니다. 조리 완료 시 문자를 보내드립니다. 현금 결제시 10% DC가 가능합니다. 현장에서 말씀해주세요"
+        md-confirm-text="확인"
+        md-cancel-text=""
+        @md-confirm="onConfirm3" />
 
       <!-- <md-progress-spinner v-if="spinnerOn" :md-diameter="100" :md-stroke="10" md-mode="indeterminate"></md-progress-spinner> -->
 
@@ -116,7 +145,9 @@ export default {
     isLoading: false,
     fullPage: true,
     PRICE: [],
-    currentPrice: 0
+    currentPrice: 0,
+    modalActive1: false, modalActive2: false, modalActive3: false,
+    numValue:null
     // curTime: new Date().format("yyyy")
 
 
@@ -329,6 +360,18 @@ export default {
 
       console.log("price", this.PRICE);
     },
+    getPhoneNumber: function() {
+      this.modalActive1 = true;
+    },
+    onConfirm1: function() {
+      console.log("get num", this.numValue);
+      this.modalActive2 = true;
+    },
+    onConfirm2: function() {
+      this.buy();
+    },
+    onConfirm3: function() {
+    },
     buy: function() {
       var params = new Object();
       // var stdId = 21300816;
@@ -360,6 +403,7 @@ export default {
         params.order[i].size = jsonData[i].size;
         params.order[i].state = 0;
         params.order[i].full = this.orderList[i].name;
+        params.order[i].phone = this.numValue;
 
         if(params.order[i].price == null) params.order[i].price = 0;
         params.order[i].price += this.PRICE[i];
@@ -486,6 +530,7 @@ export default {
         console.log(resp);
 
         loader.hide();
+        this.modalActive3 = true;
 
       })
     },

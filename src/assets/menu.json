@@ -287,25 +287,25 @@
       "category": "음료",
       "type": [
           {
-            "name": "콜라 중",
+            "name": "콜라 500ml",
             "imgUrl": "../cola.png",
             "id": "sd1",
             "price": 1000
           },
           {
-            "name": "콜라 대",
+            "name": "콜라 2L",
             "imgUrl":"../제로콜라.png",
             "id": "sd2",
             "price": 2000
           },
           {
-              "name": "스프라이트 중",
+              "name": "스프라이트 500ml",
               "imgUrl":"../환타.png",
               "id": "sd3",
               "price": 1000
           },
           {
-            "name": "스프라이트 대",
+            "name": "스프라이트 2L",
             "imgUrl":"../펩시.png",
             "id": "sd4",
             "price": 2000
