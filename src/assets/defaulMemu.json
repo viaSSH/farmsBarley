@@ -22,6 +22,11 @@
               "id": "ps3"
             },
             {
+              "name": "핫치킨",
+              "imgUrl":"../슈퍼슈프림3.png",
+              "id": "ps4"
+            },
+            {
               "name": "불고기",
               "imgUrl":"../슈퍼슈프림3.png",
               "id": "ps5"
@@ -35,6 +40,11 @@
               "name": "페파로니",
               "imgUrl":"../슈퍼슈프림3.png",
               "id": "ps7"
+            },
+            {
+              "name": "루꼴라 토마토",
+              "imgUrl":"../슈퍼슈프림3.png",
+              "id": "ps8"
             },
             {
               "name": "김치베이컨",
@@ -55,6 +65,90 @@
               "name": "파인애플",
               "imgUrl":"../슈퍼슈프림3.png",
               "id": "ps12"
+            }
+          ]
+      },
+      {
+        "category": "팜발 피자1",
+        "price": [15500, 19000, 31000],
+        "type": [
+            {
+              "name": "불고기",
+              "imgUrl":"../assets/pizza.jpg",
+              "detail": "존맛탱",
+              "id": "ppa1"
+            },
+            {
+              "name": "베이컨포테이토",
+              "imgUrl":"../골드슈프림2.png",
+              "detail": "존맛탱2",
+              "id": "ppa2"
+            },
+            {
+              "name": "칠리새우",
+              "imgUrl":"../골드슈프림3.png",
+              "detail": "존맛탱3",
+              "id": "ppa3"
+            },
+            {
+              "name": "핫치킨",
+              "imgUrl":"../골드슈프림3.png",
+              "detail": "존맛탱3",
+              "id": "ppa4"
+            }
+          ]
+      },
+      {
+        "category": "팜발 피자2",
+        "price": [17000],
+        "type": [
+            {
+              "name": "버팔로윙 루꼴라",
+              "imgUrl":"../골드슈프림.png",
+              "detail": "존맛탱",
+              "id": "ppb1"
+            }
+          ]
+      },
+      {
+        "category": "팜발 피자3",
+        "price": [15500,19000,31000],
+        "type": [
+            {
+              "name": "갈릭비프&칠리새우",
+              "imgUrl":"../골드슈프림.png",
+              "detail": "존맛탱",
+              "id": "ppc1"
+            }
+          ]
+      },
+      {
+        "category": "시카고피자",
+        "price": [21000,27000],
+        "type": [
+            {
+              "name": "불고기",
+              "imgUrl":"../골드슈프림.png",
+              "detail": "존맛탱",
+              "id": "pc1"
+            },
+            {
+              "name": "페파로니",
+              "imgUrl":"../골드슈프림.png",
+              "detail": "존맛탱",
+              "id": "pc2"
+            },
+            {
+              "name": "핫치킨",
+              "imgUrl":"../골드슈프림.png",
+              "detail": "존맛탱",
+              "id": "pc3"
+            },
+            {
+              "name": "루꼴라 토마토",
+              "imgUrl":"../골드슈프림.png",
+              "detail": "존맛탱",
+              "id": "pc4"
             }
           ]
       },

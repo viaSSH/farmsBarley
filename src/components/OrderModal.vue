@@ -57,11 +57,11 @@
               </b-form-group>
             </div>
 
-            <div v-if="modalType=='pizza' && (selectedId.slice(0,2)=='ps' || selectedId.slice(0,3)=='ppa' || selectedId.slice(0,3)=='ppc')"  class="md-layout-item md-size-50">
+            <!-- <div v-if="modalType=='pizza' && (selectedId.slice(0,2)=='ps' || selectedId.slice(0,3)=='ppa' || selectedId.slice(0,3)=='ppc')"  class="md-layout-item md-size-50">
               <b-form-group id="input-group-3" label="크러스트" label-for="input-3">
                 <b-form-select class="fb-select-box" v-model="pizzaCrustSelectd" :options="pizzaCrustOptions"></b-form-select>
               </b-form-group>
-            </div>
+            </div> -->
 
             <div class="md-layout-item md-size-50">
               <b-form-group label="수량">
@@ -518,7 +518,8 @@ VueCookies.config('7d')
         // console.log(menuData.menu.chicken[2].type);
 
         // pizzaOptions
-        for(var cnt=0 ; cnt<7 ; cnt++) {
+        // for(var cnt=0 ; cnt<7 ; cnt++) {
+        for(var cnt=0 ; cnt<3 ; cnt++) {
           for(var i=0 ; i<menuData.menu.pizza[cnt].type.length ; i++) {
 
             this.pizzaOptions.push({text: menuData.menu.pizza[cnt].category + "-" + menuData.menu.pizza[cnt].type[i].name,  value: menuData.menu.pizza[cnt].type[i].id});

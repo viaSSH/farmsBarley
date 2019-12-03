@@ -19,7 +19,7 @@
         </div>
       </div>
 
-      <div class="md-layout md-alignment-center-center fb-cart-list-container" v-if="orderList.length != 0">
+      <div class="md-layout md-alignment-center-center fb-cart-list-container" v-if="orderList.length != 0" style="padding-bottom: 60px;">
         <div class="md-layout-item md-size-100 fb-cart-list-box">
           <md-card>
             <md-card-header>
@@ -85,7 +85,7 @@
         md-input-maxlength="11"
         md-input-placeholder="ex)01012345678"
         md-title="정보입력"
-        md-content="조리 완료 알람과 노쇼 방지를 위해 전화번호를 입력해주세요 ex)01012345678"
+        md-content="조리 완료 알람과 노쇼 방지를 위해 <br> 전화번호를 입력해주세요<br> ex)01012345678"
         md-confirm-text="확인"
         md-cancel-text="취소"
         @md-confirm="onConfirm1" />
@@ -191,6 +191,8 @@ export default {
       this.orderList = [];
       this.PRICE = [];
 
+      var pizzaCategoryCount = 3;
+
       if(cnt == undefined) cnt = 0;
 
       for(var num=0 ; num<cnt ; num++) {
@@ -200,7 +202,7 @@ export default {
 
         if(menuId.slice(0,1) == 'p') {
 
-          for(var i=0 ; i<7 ; i++) {
+          for(var i=0 ; i<pizzaCategoryCount ; i++) {
             for(var j=0 ; j<menuData.menu.pizza[i].type.length ; j++) {
               if(menuData.menu.pizza[i].type[j].id == menuId) {
                 orderName = orderName + menuData.menu.pizza[i].category + "/";
@@ -218,7 +220,7 @@ export default {
 
           //for half
           if(jsonData[num].option != "default") {
-            for(var i=0 ; i<7 ; i++) {
+            for(var i=0 ; i<pizzaCategoryCount ; i++) {
               for(var j=0 ; j<menuData.menu.pizza[i].type.length ; j++) {
                 if(menuData.menu.pizza[i].type[j].id == jsonData[num].option) {
                   orderName = "반반/" + orderName + menuData.menu.pizza[i].type[j].name + "/";
