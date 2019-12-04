@@ -66,13 +66,14 @@
           </form>
           <!-- <b-img src="../assets/logo.png"/> -->
           <!-- <img src="../assets/logo.png" alt="">
-        p -->
-        <p >이 서비스는 12월 4일(수) 기간 동안만 진행되는 테스트 서비스입니다. </p>
+        1p -->
+        <img src="../assets/info.jpg" alt="">
+        <!-- <p >이 서비스는 12월 4일(수) 기간 동안만 진행되는 테스트 서비스입니다. </p>
         <p style="font-size:14px;">원활한 테스트 진행을 위해 이틀간은 전화 주문 및 현장 주문은 받지 않습니다. 양해 부탁드립니다.</p>
         <p style="font-size:14px;">불편한 점이나 문의사항이 있으시면 아래의 연락처를 통해 문의해주세요:)</p>
         <p style="font-size:14px;">-불편사항 및 개선 문의-
         카카오톡 플러스 친구채널 이름:  팜스발리CS</p>
-        <p style="font-size:14px;">검색 ID: farmsbarleycs</p>
+        <p style="font-size:14px;">검색 ID: farmsbarleycs</p> -->
         </b-modal>
 
 
