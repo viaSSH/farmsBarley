@@ -1,8 +1,16 @@
 <template >
   <div class="md-layout md-alignment-center-center fb-menuHistory-container">
     <!-- <div class="" v-if="MENU == null"> -->
-    <div class="" v-if="MENU.length == 0">
+    <div class="" v-if="MENU.length == 0" style="padding-top:40px; font-size:20px; font-weight:900;">
       <span>주문내역이 없습니다 </span>
+      <!-- <md-empty-state
+        md-rounded
+        md-icon="add_shopping_cart"
+        md-label="주문내역이 없습니다."
+        md-description=""
+        md-size="200"
+        >
+      </md-empty-state> -->
     </div>
     <!-- <div class="">
         <span> - {{stdId}} test</span>

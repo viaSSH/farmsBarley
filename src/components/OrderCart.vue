@@ -12,9 +12,10 @@
 
         </div>
         <div class="md-layout-item md-size-40">
-          <md-button class="md-raised md-primary" @click="deleteList()">
+          <!-- <md-button class="md-raised md-primary" @click="deleteList()"> -->
+          <md-button class="md-raised md-primary" @click="deleteAll()">
             <md-icon>delete</md-icon>
-            삭제
+            전체삭제
             </md-button>
         </div>
       </div>
@@ -44,7 +45,9 @@
                   </div>
                 </md-table-toolbar> -->
 
-                <md-table-row slot="md-table-row" slot-scope="{ item }"  md-selectable="multiple" md-auto-select>
+                <!-- <md-table-row slot="md-table-row" slot-scope="{ item }"  md-selectable="multiple" md-auto-select> -->
+                <md-table-row slot="md-table-row" slot-scope="{ item }">
+                  <md-table-cell md-label="-" md-sort-by="" style="text-align:center; ">{{ item.id }}</md-table-cell>
                   <md-table-cell md-label="메뉴" md-sort-by="name">{{ item.name }}</md-table-cell>
                   <md-table-cell  md-label="가격/수량" md-sort-by="">{{ item.price }}</md-table-cell>
                   <!-- <md-table-cell md-label="수량" md-sort-by="gender">{{ item.amount }}</md-table-cell> -->
@@ -176,6 +179,11 @@ export default {
       VueCookies.set('menu', JSON.stringify(temp));
       this.createMenuData();
 
+    },
+    deleteAll: function() {
+      this.orderList = [];
+      VueCookies.set('menu', JSON.stringify(null));
+      this.createMenuData();
     },
     createMenuData: function() {
 

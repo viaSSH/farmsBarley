@@ -243,13 +243,14 @@ VueCookies.config('7d')
               this.priceBySize = menuData.menu.pizza[4].price;
           }
           if(newV.slice(1,2) == 'j') {
-              this.priceBySize = menuData.menu.pizza[5].price;
+              // this.priceBySize = menuData.menu.pizza[5].price;
+              this.priceBySize = menuData.menu.pizza[1].price;
           }
           if(newV.slice(1,2) == 'b') {
-              for(var i=0 ; i<menuData.menu.pizza[6].type.length ; i++) {
-                this.pizzaHalfOptions.push({text: "반반 - " + menuData.menu.pizza[6].type[i].name,  value: menuData.menu.pizza[6].type[i].id});
+              for(var i=0 ; i<menuData.menu.pizza[2].type.length ; i++) {
+                this.pizzaHalfOptions.push({text: "반반 - " + menuData.menu.pizza[2].type[i].name,  value: menuData.menu.pizza[2].type[i].id});
               }
-              this.priceBySize = menuData.menu.pizza[6].price;
+              this.priceBySize = menuData.menu.pizza[2].price;
           }
 
 

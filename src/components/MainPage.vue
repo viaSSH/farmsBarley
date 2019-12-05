@@ -258,4 +258,10 @@ export default {
   .md-dialog-actions
     justify-content: flex-start;
 
+  .md-content .md-tabs-content .md-theme-default
+    min-height: 600px !important;
+
+  .md-tabs-content
+    min-height: 600px !important;
+
 </style>
